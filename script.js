@@ -1,12 +1,11 @@
 let currentPokemon;
 
-async function loadPokemon() {
+async function init() {
     let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
     let response = await fetch(url);
     let allPokemon = await response.json();
 
     loadPokemonNames(allPokemon);
-    loadPokemonData();
 }
 
 
@@ -31,6 +30,7 @@ function renderOnePokemon(i, pokemonData) {
         <div>
         <h2>${pokemonData['name']}</h2>
         <div id="pokemon-type${i}"></div>
+        <img src="${pokemonData['sprites']['other']['dream_world']['front_default']}">
         </div>
         `;
     addTypesOfPokemon(i, pokemonData);
