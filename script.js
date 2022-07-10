@@ -1,4 +1,3 @@
-let pokemonNames = [];
 let currentPokemon;
 
 async function loadPokemon() {
@@ -6,15 +5,43 @@ async function loadPokemon() {
     let response = await fetch(url);
     let allPokemon = await response.json();
 
-    loadPokemonByName(allPokemon);
+    loadPokemonNames(allPokemon);
+    loadPokemonData();
 }
 
 
-function loadPokemonByName(allPokemon) {
+function loadPokemonNames(allPokemon) {
     for (let i = 0; i < 20 /*allPokemon['results'].length*/; i++) {
-        let onePokemon = allPokemon['results'][i]['name'];
-        pokemonNames.push(onePokemon);
-        document.getElementById('container').innerHTML += /*html*/`
-            <h2>${onePokemon}</h2>`;
+        let pokemonName = allPokemon['results'][i]['name'];
+        loadPokemonData(i, pokemonName);
     } 
+}
+
+
+async function loadPokemonData(i, pokemonName) {
+        let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+        let response = await fetch(url);
+        let pokemonData = await response.json();
+        renderOnePokemon(i, pokemonData);
+}
+
+
+function renderOnePokemon(i, pokemonData) {
+    document.getElementById('container').innerHTML += /*html*/`
+        <div>
+        <h2>${pokemonData['name']}</h2>
+        <div id="pokemon-type${i}"></div>
+        </div>
+        `;
+    addTypesOfPokemon(i, pokemonData);
+}
+
+
+function addTypesOfPokemon(i, pokemonData) {
+    for (let t = 0; t < pokemonData['types'].length; t++) {
+        let type = pokemonData['types'][t]['type']['name'];
+        document.getElementById(`pokemon-type${i}`).innerHTML += /*html*/`
+            <span>${type}</span>
+            `;
+    }
 }
