@@ -21,10 +21,14 @@ async function loadPokemonNames(allPokemon) {
 function renderOnePokemon(i, pokemonData) {
     document.getElementById('container').innerHTML += /*html*/`
         <div id="pokemon-card-small${i}" class="pokemon-card-small bg-small">
-        <h2>${pokemonData['name']}</h2>
-        <span>#${pokemonData['id']}</span>
-        <div id="pokemon-types${i}"></div>
-        <img class="pokemon-img-small" src="${pokemonData['sprites']['other']['dream_world']['front_default']}">
+            <div class="pokemon-card-top">
+                <h2 class="fit">${pokemonData['name']}</h2>
+                <span class="fit pokemon-id">#${pokemonData['id']}</span>
+            </div>
+            <div class="pokemon-card-bottom">
+                <div id="pokemon-types${i}" class="pokemon-types fit"></div>
+                <img class="pokemon-img-small" src="${pokemonData['sprites']['other']['dream_world']['front_default']}">
+            </div>
         </div>
         `;
     addTypesOfPokemon(i, pokemonData);
@@ -36,7 +40,7 @@ function addTypesOfPokemon(i, pokemonData) {
     for (let t = 0; t < pokemonData['types'].length; t++) {
         let type = pokemonData['types'][t]['type']['name'];
         document.getElementById(`pokemon-types${i}`).innerHTML += /*html*/`
-            <span>${type}</span>
+            <span class="fit">${type}</span>
             `;
         addTypeColor(i);
     }
