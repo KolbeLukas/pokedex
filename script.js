@@ -4,24 +4,17 @@ async function init() {
     let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
     let response = await fetch(url);
     let allPokemon = await response.json();
-
     loadPokemonNames(allPokemon);
 }
 
 
-function loadPokemonNames(allPokemon) {
+async function loadPokemonNames(allPokemon) {
     for (let i = 0; i < 20 /*allPokemon['results'].length*/; i++) {
-        let pokemonName = allPokemon['results'][i]['name'];
-        loadPokemonData(i, pokemonName);
+        let url = allPokemon['results'][i]['url'];
+        let response = await fetch(url);
+        let pokemonData = await response.json();
+        renderOnePokemon(i, pokemonData);
     }
-}
-
-
-async function loadPokemonData(i, pokemonName) {
-    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
-    let response = await fetch(url);
-    let pokemonData = await response.json();
-    renderOnePokemon(i, pokemonData);
 }
 
 
@@ -35,7 +28,7 @@ function renderOnePokemon(i, pokemonData) {
         </div>
         `;
     addTypesOfPokemon(i, pokemonData);
-    addBackgroundToCard(i);
+    addBackgroundToCard(i, pokemonData);
 }
 
 
@@ -57,10 +50,10 @@ function addTypeColor(i) {
 }
 
 
-function addBackgroundToCard(i) {
-    let types = document.getElementById(`pokemon-types${i}`);
-    let firstType = types.firstElementChild;
-    if (firstType.innerHTML.indexOf('grass') != -1) {
-        document.getElementById(`pokemon-card-small${i}`).classList.add('bg-small-green');
-    }
+async function addBackgroundToCard(i, pokemonData) {
+    let url = pokemonData['species']['url'];
+    let response = await fetch(url);
+    let pokemonSpecies = await response.json();
+    let color = pokemonSpecies['color']['name'];
+    document.getElementById(`pokemon-card-small${i}`).classList.add(`bg-small-${color}`);
 }

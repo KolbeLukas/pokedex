@@ -83,12 +83,44 @@
     background-repeat: no-repeat;
 }
 
+.bg-small-black {
+    background-image: url(img/bg-small-black.png);
+}
+
+.bg-small-blue {
+    background-image: url(img/bg-small-blue.png);
+}
+
+.bg-small-brown {
+    background-image: url(img/bg-small-brown.png);
+}
+
+.bg-small-gray {
+    background-image: url(img/bg-small-gray.png);
+}
+
 .bg-small-green {
     background-image: url(img/bg-small-green.png);
 }
 
+.bg-small-pink {
+    background-image: url(img/bg-small-pink.png);
+}
+
+.bg-small-purple {
+    background-image: url(img/bg-small-purple.png);
+}
+
 .bg-small-red {
     background-image: url(img/bg-small-red.png);
+}
+
+.bg-small-white {
+    background-image: url(img/bg-small-white.png);
+}
+
+.bg-small-yellow {
+    background-image: url(img/bg-small-yellow.png);
 }
 
 body {
@@ -99,6 +131,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .pokemon-card-small {
