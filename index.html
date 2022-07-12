@@ -6,12 +6,16 @@
     <title>Pokedex</title>
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="color+background.css">
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <link rel="stylesheet" href="fonts.css">
     <script src='script.js'></script>
 </head>
-<body onload="init()">
+<body id="body" onload="init()" onscroll="nextPokemons()">
     <div id="container">
+    </div>
+    <div id="loading" class="loading d-none">
+
     </div>
 </body>
 </html>
