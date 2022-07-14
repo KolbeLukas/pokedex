@@ -1,37 +1,52 @@
+let pokemonNames = [];
 let pokemonData = [];
 let pokemonSpecies = [];
 let LIMIT = 50;
 let offset = 0;
 
+
 async function init() {
     let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
     let response = await fetch(url);
-    let allPokemon = await response.json();
-    loadPokemonData(allPokemon);
+    let allPokemonNames = await response.json();
+    pokemonNames.push(allPokemonNames);
+    console.log(allPokemonNames);
+    loadPokemonData();
 }
 
 
-async function loadPokemonData(allPokemon) {
+async function loadPokemonData() {
+    await getPokemonData();
+    await getPokemonSpecies();
+    document.getElementById('body').classList.remove('n-scroll');
+    renderOnePokemon();
+}
+
+
+async function getPokemonData() {
     for (let i = offset; i < offset + LIMIT; i++) {
-        let urlData = allPokemon['results'][i]['url'];
-        let responseData = await fetch(urlData);
-        let data = await responseData.json();
+        let url = pokemonNames[0]['results'][i]['url'];
+        let response = await fetch(url);
+        let data = await response.json();
         pokemonData.push(data);
-        let urlSpecies = pokemonData[i]['species']['url'];
-        let response = await fetch(urlSpecies);
+    }
+}
+
+
+async function getPokemonSpecies() {
+    for (let i = offset; i < offset + LIMIT; i++) {
+        let url = pokemonData[i]['species']['url'];
+        let response = await fetch(url);
         let species = await response.json();
         pokemonSpecies.push(species);
     }
-    document.getElementById('b').classList.remove('n-scroll');
-    renderOnePokemon();
 }
 
 
 function renderOnePokemon() {
     for (let i = offset; i < offset + LIMIT; i++) {
         const onePokemon = pokemonData[i];
-        
-    document.getElementById('container').innerHTML += /*html*/`
+        document.getElementById('container').innerHTML += /*html*/`
         <div id="pokemon-card-small${i}" class="pokemon-card-small bg-small">
             <div class="pokemon-card-top">
                 <h2 class="fit">${onePokemon['name']}</h2>
@@ -43,8 +58,8 @@ function renderOnePokemon() {
             </div>
         </div>
         `;
-    addTypesOfPokemon(i);
-    addBackgroundToCard(i);
+        addTypesOfPokemon(i);
+        addBackgroundToCard(i);
     }
 }
 
@@ -75,9 +90,9 @@ async function addBackgroundToCard(i) {
 
 function nextPokemons() {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        document.getElementById('b').classList.add('n-scroll');
+        document.getElementById('body').classList.add('n-scroll');
         offset += LIMIT;
         LIMIT = 3;
-        init();
+        loadPokemonData();
     }
 }
