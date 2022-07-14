@@ -1,7 +1,7 @@
 let pokemonNames = [];
 let pokemonData = [];
 let pokemonSpecies = [];
-let LIMIT = 50;
+let LIMIT = 48;
 let offset = 0;
 
 
@@ -18,7 +18,6 @@ async function init() {
 async function loadPokemonData() {
     await getPokemonData();
     await getPokemonSpecies();
-    document.getElementById('body').classList.remove('n-scroll');
     renderOnePokemon();
 }
 
@@ -47,14 +46,16 @@ function renderOnePokemon() {
     for (let i = offset; i < offset + LIMIT; i++) {
         const onePokemon = pokemonData[i];
         document.getElementById('container').innerHTML += /*html*/`
-        <div id="pokemon-card-small${i}" class="pokemon-card-small bg-small">
-            <div class="pokemon-card-top">
-                <h2 class="fit">${onePokemon['name']}</h2>
-                <span class="fit pokemon-id">#${onePokemon['id']}</span>
-            </div>
-            <div class="pokemon-card-bottom">
-                <div id="pokemon-types${i}" class="pokemon-types fit"></div>
-                <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}">
+        <div class="pokemon-card-small-box">
+            <div id="pokemon-card-small${i}" class="pokemon-card-small bg-small">
+                <div class="pokemon-card-top">
+                    <h2 class="fit">${onePokemon['name']}</h2>
+                    <span class="fit pokemon-id">#${onePokemon['id']}</span>
+                </div>
+                <div class="pokemon-card-bottom">
+                    <div id="pokemon-types${i}" class="pokemon-types fit"></div>
+                    <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}">
+                </div>
             </div>
         </div>
         `;
@@ -89,10 +90,11 @@ async function addBackgroundToCard(i) {
 
 
 function nextPokemons() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        document.getElementById('body').classList.add('n-scroll');
+    let content = document.getElementById('container');
+
+    if (content.offsetHeight + content.scrollTop >= content.scrollHeight) {
         offset += LIMIT;
-        LIMIT = 3;
+        LIMIT = 4;
         loadPokemonData();
     }
 }

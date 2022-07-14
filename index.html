@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -7,15 +8,62 @@
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="color+background.css">
-    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <link rel="stylesheet" href="fonts.css">
     <script src='script.js'></script>
 </head>
-<body id="body" onload="init()" onscroll="nextPokemons()">
-    <div id="container">
-    </div>
-    <div id="loading" class="loading d-none">
 
+<body onload="init()">
+    <div id="pokedex">
+        <main>
+            <div class="main-top">
+                <input class="search" type="text" placeholder="search..">
+                <div class="light-top">
+                    <img src="img/red-light.png">
+                    <img src="img/yellow-light.png">
+                    <img src="img/green-light.png">
+                </div>
+                <img class="lens" src="img/lens.png">
+            </div>
+            <div class="container">
+                <div onscroll="nextPokemons()" id="container">
+                </div>
+            </div>
+        </main>
+        <input class="open" type="checkbox" id="one">
+        <div class="cover">
+            <div class="top-edge"></div>
+            <div class="front">
+                <div class="headline">
+                    <h1>POKEDEX</h1>
+                </div>
+                <div class="triangle-bg">
+                    <div class="triangle"></div>
+                </div>
+                <div class="front-ornament-bottom-box">
+                    <div class="front-ornament-bottom"></div>
+                </div>
+                <div class="front-ornament-left-box">
+                    <div class="front-ornament-left">
+                        <div class="front-ornament-left-top"></div>
+                        <div class="front-ornament-left-bottom"></div>
+                    </div>
+                </div>
+                <label for="one"></label>
+            </div>
+            <div class="back">
+                <div class="front-ornament-bottom-box">
+                    <div class="front-ornament-bottom"></div>
+                </div>
+                <div class="front-ornament-left-box">
+                    <div class="front-ornament-left">
+                        <div class="front-ornament-left-top"></div>
+                        <div class="front-ornament-left-bottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>
