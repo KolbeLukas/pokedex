@@ -15,21 +15,6 @@
 
 <body onload="init()">
     <div id="pokedex">
-        <main>
-            <div class="main-top">
-                <input class="search" type="text" placeholder="search..">
-                <div class="light-top">
-                    <img src="img/red-light.png">
-                    <img src="img/yellow-light.png">
-                    <img src="img/green-light.png">
-                </div>
-                <img class="lens" src="img/lens.png">
-            </div>
-            <div class="container">
-                <div onscroll="nextPokemons()" id="container">
-                </div>
-            </div>
-        </main>
         <input class="open" type="checkbox" id="one">
         <div class="cover">
             <div class="top-edge"></div>
@@ -63,6 +48,25 @@
                 </div>
             </div>
         </div>
+        <main>
+            <div class="main-top">
+                <input class="search" type="text" placeholder="search..">
+                <div class="light-top">
+                    <img src="img/red-light.png">
+                    <img src="img/yellow-light.png">
+                    <img src="img/green-light.png">
+                </div>
+                <img class="lens" src="img/lens.png">
+            </div>
+            <div class="container">
+                <div onscroll="nextPokemons()" id="container">
+                    <div id="loading" class="loading-box">
+                        <img src="img/pokeball.png">
+                        <span>Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 

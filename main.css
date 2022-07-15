@@ -1,341 +1,369 @@
 .fit {
-    width: fit-content;
+  width: fit-content;
 }
 
 html {
-    font-family: 'Roboto';
+  font-family: 'Roboto';
 }
 
 body {
-    margin: 0;
-    background-image: url(img/meadow.jpg);
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  margin: 0;
+  background-image: url(img/meadow.jpg);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow-y: scroll;
-    height: 99%;
-    width: 99%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: auto;
+  height: 99%;
+  width: 99%;
 }
 
 .container {
-    margin-bottom: 3px;
-    height: 90%;
-    width: 99%;
-    background-color: #F1F1F1;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-bottom: 3px;
+  height: 90%;
+  width: 99%;
+  background-color: #F1F1F1;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-box {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(0 0 0 / 20%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loading-box img {
+  height: 60px;
+  width: 60px;
+  margin-bottom: 20px;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loading-box span {
+  font-size: 20px;
 }
 
 .pokemon-card-small-box {
-    width: 215px;
-    height: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 215px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pokemon-card-small {
-    height: 170px;
-    width: 173px;
-    padding-inline: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    border-radius: 10px;
-    transition: height 25ms ease-in-out, width 25ms ease-in-out;
+  height: 170px;
+  width: 173px;
+  padding-inline: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 10px;
+  transition: height 25ms ease-in-out, width 25ms ease-in-out;
 }
 
 .pokemon-card-small:hover {
-    height: 180px;
-    width: 183px;
+  height: 180px;
+  width: 183px;
 }
 
 .pokemon-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .pokemon-card-bottom {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 h2 {
-    text-transform: capitalize;
-    margin: 0;
+  text-transform: capitalize;
+  margin: 0;
 }
 
 .pokemon-types {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.pokemon-types span{
-    padding: 3px 7px;
-    font-size: 14px;
-    border-radius: 4px;
+.pokemon-types span {
+  padding: 3px 7px;
+  font-size: 14px;
+  border-radius: 4px;
 }
 
 .pokemon-img-small {
-    height: 100px;
-    width: 100px;
-    margin-top: -10px;
+  height: 100px;
+  width: 100px;
+  margin-top: -10px;
 }
 
 .n-scroll {
-    overflow-y: hidden;
-    padding-right: 17px;
+  overflow-y: hidden;
+  padding-right: 17px;
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 .search {
-    width: 33%;
+  width: 33%;
 }
 
 
 /* POKEDEX FRAMEWORK */
 
 #pokedex {
-    width: 1790px;
-    height: 97vh;
-    position: absolute;
-    right: calc((100vw - 907px) / 2);
-    top: 1vh;
-    perspective: 75vw;
+  width: 1790px;
+  height: 97vh;
+  position: absolute;
+  right: calc((100vw - 907px) / 2);
+  top: 1vh;
+  perspective: 75vw;
+}
+
+#pokedex:before {
+  width: 1%;
+  height: 100%;
+  background-color: #c92323;
+  content: '';
+  position: absolute;
+  left: 49%;
+  top: 0;
+  box-shadow: 1px 8px 0px 2px #c92323, 2px 8px 0px 6px #000000;
+  outline: 4px solid black;
+}
+
+.cover {
+  width: 50%;
+  height: 90%;
+  background-color: #c92323;
+  outline: 4px solid black;
+  box-shadow: 0px -8px 4px 0px rgb(0 0 0 / 20%);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transition: transform 2s linear, left 2s linear;
+  transform-origin: 0% 50%;
+  z-index: 5;
+  border-radius: 0 8px 8px 0;
+}
+
+main {
+  width: 50%;
+  height: 100%;
+  background-color: #c92323;
+  outline: 4px solid black;
+  box-shadow: 5px 5px 0px 5px #C92323, 7px 7px 0px 7px #000000;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.front, .back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity .1s linear 1s;
+}
+
+.front {
+  opacity: 1;
+}
+
+.open {
+  visibility: hidden;
+}
+
+label {
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.open:checked+.cover {
+  transform: rotateY(-180deg);
+  left: calc(50% - 4px)
+}
+
+.open:checked+.cover .front {
+  opacity: 0;
+}
+
+.open:checked+.cover .back {
+  opacity: 1;
+}
+
+
+/* POKEDEX COVER FRONT */
+
+.headline {
+  position: absolute;
+  left: 0;
+  top: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  color: #ffd500;
+  font-size: 50px;
+  letter-spacing: 10px;
+}
+
+.top-edge {
+  height: 10%;
+  width: 50%;
+  background-color: #C92323;
+  position: absolute;
+  top: calc(-10% - 4px);
+  border-top: 4px solid black;
+  border-right: 4px solid black;
+  box-shadow: 0px -8px 4px 0px rgb(0 0 0 / 20%), 8px -8px 4px 0px rgb(0 0 0 / 20%);
+}
+
+.triangle-bg {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 59px 60px 59px 0;
+  border-color: transparent #000000 transparent transparent;
+  position: absolute;
+  right: 50px;
+  top: 40%;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 50px 50px 0;
+  border-color: transparent #ffd500 transparent transparent;
+  position: relative;
+  right: -6px;
+  bottom: 50px;
+}
+
+
+.front-ornament-bottom-box {
+  width: 100%;
+  height: 3%;
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.front-ornament-bottom {
+  width: 60%;
+  box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
+  background-color: #C92323;
+  border-radius: 8px;
+}
+
+.front-ornament-left-box {
+  width: 3%;
+  height: 110%;
+  background-color: aliceblue;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.front-ornament-left {
+  box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
+  background-color: #C92323;
+  border-radius: 4px;
+  height: 100%;
+}
+
+.front-ornament-left-top {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  height: 1%;
+  background-color: #C92323;
+  box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
+}
+
+.front-ornament-left-bottom {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  height: 1%;
+  background-color: #C92323;
+  box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
+}
+
+.main-top {
+  position: absolute;
+  top: 2px;
+  width: 99%;
+  height: 9%;
+  background-color: #C92323;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.lens {
+  height: 100%;
+}
+
+.light-top {
+  max-width: 200px;
+  width: 33%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* POKEDEX COVER BACK */
+
+.cover .back {
+  background-color: #c92323;
+}
+
+@media (max-width: 940px) {
+  #pokedex {
+    width: 190vw;
+    right: 2vw;
   }
-  
-  #pokedex:before {
-    width: 1%;
-    height: 100%;
-    background-color: #c92323;
-    content: '';
-    position: absolute;
-    left: 49%;
-    top: 0;
-    box-shadow: 1px 8px 0px 2px #c92323, 2px 8px 0px 6px #000000;
-    outline: 4px solid black;
-  }
-  
-  .cover {
-    width: 50%;
-    height: 90%;
-    background-color: #c92323;
-    outline: 4px solid black;
-    box-shadow: 0px -8px 4px 0px rgb(0 0 0 / 20%);
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transition: transform 2s linear, left 2s linear;
-    transform-origin: 0% 50%;
-    z-index: 5;
-    border-radius: 0 8px 8px 0;
-  }
-  
-  main {
-    width: 50%;
-    height: 100%;
-    background-color: #c92323;
-    outline: 4px solid black;
-    box-shadow: 5px 5px 0px 5px #C92323, 7px 7px 0px 7px #000000;
-    position: absolute;
-    left: 50%;
-    top: 0;
-    border-radius: 0 8px 8px 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-  }
-  
-  .front, .back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity .1s linear 1s;
-  }
-  
-  .front {
-    opacity: 1;
-  }
-  
-  .open {
-    visibility: hidden;
-  }
-  
-  label {
-    width: 100%;
-    height: 100%;
-    z-index: 99;
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-  }
-  
-  .open:checked+.cover {
-    transform: rotateY(-180deg);
-    left: calc(50% - 4px)
-  }
-  
-  .open:checked+.cover .front {
-    opacity: 0;
-  }
-  
-  .open:checked+.cover .back {
-    opacity: 1;
-  }
-  
-  
-  /* POKEDEX COVER FRONT */
-  
-  .headline {
-    position: absolute;
-    left: 0;
-    top: 20%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  h1 {
-    color: #ffd500;
-    font-size: 50px;
-    letter-spacing: 10px;
-  }
-  
-  .top-edge {
-    height: 10%;
-    width: 50%;
-    background-color: #C92323;
-    position: absolute;
-    top: calc(-10% - 4px);
-    border-top: 4px solid black;
-    border-right: 4px solid black;
-    box-shadow: 0px -8px 4px 0px rgb(0 0 0 / 20%), 8px -8px 4px 0px rgb(0 0 0 / 20%);
-  }
-  
-  .triangle-bg {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 59px 60px 59px 0;
-    border-color: transparent #000000 transparent transparent;
-    position: absolute;
-    right: 50px;
-    top: 40%;
-  }
-  
-  .triangle {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 50px 50px 50px 0;
-    border-color: transparent #ffd500 transparent transparent;
-    position: relative;
-    right: -6px;
-    bottom: 50px;
-  }
-  
-  
-  .front-ornament-bottom-box {
-    width: 100%;
-    height: 3%;
-    position: absolute;
-    bottom: 10%;
-    left: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .front-ornament-bottom {
-    width: 60%;
-    box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-    background-color: #C92323;
-    border-radius: 8px;
-  }
-  
-  .front-ornament-left-box {
-    width: 3%;
-    height: 110%;
-    background-color: aliceblue;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
-  
-  .front-ornament-left {
-    box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-    background-color: #C92323;
-    border-radius: 4px;
-    height: 100%;
-  }
-  
-  .front-ornament-left-top {
-    position: absolute;
-    top: 10%;
-    width: 100%;
-    height: 1%;
-    background-color: #C92323;
-    box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-  }
-  
-  .front-ornament-left-bottom {
-    position: absolute;
-    bottom: 10%;
-    width: 100%;
-    height: 1%;
-    background-color: #C92323;
-    box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-  }
-  
-  .main-top {
-    position: absolute;
-    top: 2px;
-    width: 99%;
-    height: 9%;
-    background-color: #C92323;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  .lens {
-    height: 100%;
-  }
-  
-  .light-top {
-    max-width: 200px;
-    width: 33%;
-    display: flex;
-    justify-content: space-evenly;
-  }
-  
-  /* POKEDEX COVER BACK */
-  
-  .cover .back {
-    background-color: #c92323;
-  }
-  
-  @media (max-width: 940px) {
-    #pokedex {
-      width: 190vw;
-      right: 2vw;
-    }
-  }
+}

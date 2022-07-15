@@ -19,6 +19,7 @@ async function loadPokemonData() {
     await getPokemonData();
     await getPokemonSpecies();
     renderOnePokemon();
+    removeLoadingScreen()
 }
 
 
@@ -97,4 +98,13 @@ function nextPokemons() {
         LIMIT = 4;
         loadPokemonData();
     }
+}
+
+function showLoadingScreen() {
+    document.getElementById('loading').classList.remove('d.none');
+}
+
+
+function removeLoadingScreen() {
+    document.getElementById('loading').classList.add('d-none');
 }
