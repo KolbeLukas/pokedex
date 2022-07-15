@@ -50,11 +50,11 @@ function renderOnePokemon() {
         <div class="pokemon-card-small-box d-f jc-c ai-c">
             <div id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small">
                 <div class="d-f jc-sb ai-c">
-                    <h2 class="fit">${onePokemon['name']}</h2>
-                    <span class="fit pokemon-id">#${onePokemon['id']}</span>
+                    <h2>${onePokemon['name']}</h2>
+                    <span class="pokemon-id">#${onePokemon['id']}</span>
                 </div>
                 <div class="d-f jc-sb ai-c">
-                    <div id="pokemon-types${i}" class="d-f fd-c fit"></div>
+                    <div id="pokemon-types${i}" class="d-f fd-c"></div>
                     <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}">
                 </div>
             </div>
@@ -70,7 +70,7 @@ function addTypesOfPokemon(i) {
     for (let t = 0; t < pokemonData[i]['types'].length; t++) {
         let type = pokemonData[i]['types'][t]['type']['name'];
         document.getElementById(`pokemon-types${i}`).innerHTML += /*html*/`
-            <span class="fit">${type}</span>
+            <span class="fit small-type">${type}</span>
             `;
         addTypeColor(i);
     }

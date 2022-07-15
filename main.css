@@ -45,6 +45,10 @@ body {
   width: 100%;
 }
 
+.fit {
+  width: fit-content;
+}
+
 .d-none {
   display: none !important;
 }
@@ -74,7 +78,6 @@ body {
 .cover {
   width: 50%;
   height: 90%;
-  background-color: #c92323;
   outline: 4px solid black;
   box-shadow: 0px -8px 4px 0px rgb(0 0 0 / 20%);
   left: 50%;
@@ -87,7 +90,6 @@ body {
 
 main {
   width: 50%;
-  background-color: #c92323;
   outline: 4px solid black;
   box-shadow: 5px 5px 0px 5px #C92323, 7px 7px 0px 7px #000000;
   left: 50%;
@@ -150,7 +152,6 @@ h1 {
 .top-edge {
   height: 10%;
   width: 50%;
-  background-color: #C92323;
   top: calc(-10% - 4px);
   border-top: 4px solid black;
   border-right: 4px solid black;
@@ -179,51 +180,40 @@ h1 {
 }
 
 
-.front-ornament-bottom-box {
+.cover-ornament-bottom-box {
   height: 3%;
   bottom: 10%;
   left: 0;
 }
 
-.front-ornament-bottom {
+.cover-ornament-bottom {
   width: 60%;
   box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-  background-color: #C92323;
   border-radius: 8px;
 }
 
-.front-ornament-left-box {
+.cover-ornament-side-box {
   width: 3%;
   height: 110%;
-  background-color: aliceblue;
   left: 0;
   bottom: 0;
 }
 
-.front-ornament-left {
+.cover-ornament-side {
   box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-  background-color: #C92323;
   border-radius: 4px;
 }
 
-.front-ornament-left-top {
+.cover-ornament-side-top {
   top: 10%;
   height: 1%;
-  background-color: #C92323;
   box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
 }
 
-.front-ornament-left-bottom {
+.cover-ornament-side-bottom {
   bottom: 10%;
   height: 1%;
-  background-color: #C92323;
   box-shadow: 0px 0px 0px 4px hsl(0deg 0% 13%), inset 0px 10px 27px -8px #141414, 10px 5px 15px 5px rgb(0 0 0 / 0%);
-}
-
-/* POKEDEX COVER BACK */
-
-.cover .back {
-  background-color: #c92323;
 }
 
 /* POKEDEX MAIN PAGE */
@@ -232,7 +222,6 @@ h1 {
   top: 2px;
   width: 99%;
   height: 9%;
-  background-color: #C92323;
 }
 
 .search {
@@ -254,10 +243,6 @@ h1 {
 .light-top {
   max-width: 200px;
   width: 33%;
-}
-
-.fit {
-  width: fit-content;
 }
 
 #container {
@@ -305,6 +290,7 @@ h1 {
 .pokemon-card-small {
   height: 170px;
   width: 173px;
+  border-radius: 8px;
   padding-inline: 16px;
   transition: height 25ms ease-in-out, width 25ms ease-in-out;
 }
@@ -319,7 +305,7 @@ h2 {
   margin: 0;
 }
 
-.pokemon-types span {
+.small-type {
   padding: 3px 7px;
   font-size: 14px;
   border-radius: 4px;
@@ -351,7 +337,7 @@ h2 {
 
 .back-favorite {
   padding-top: 32px;
-  padding-bottom: 16px;
+  padding-bottom: 24px;
 }
 
 .pokemon-details-bottom {

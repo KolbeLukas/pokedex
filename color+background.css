@@ -78,6 +78,10 @@
     background-color: black;
 }
 
+.bg-red {
+    background-color: #C92323;
+}
+
 .bg-small {
     background-size: contain;
     background-repeat: no-repeat;
