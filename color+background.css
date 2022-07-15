@@ -83,6 +83,10 @@
     background-repeat: no-repeat;
 }
 
+body {
+    background-image: url(img/meadow.jpg);
+}
+
 .bg-small-black {
     background-image: url(img/bg-small-black.png);
 }
@@ -123,8 +127,16 @@
     background-image: url(img/bg-small-yellow.png);
 }
 
+.bg-big-green {
+    background-color: #49D0B0;
+    background-image: url(img/bg-big-green.png);
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
 h2 {
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(0, 0, 0, 0.651);
 }
 
 .pokemon-id {

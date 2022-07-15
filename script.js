@@ -47,14 +47,14 @@ function renderOnePokemon() {
     for (let i = offset; i < offset + LIMIT; i++) {
         const onePokemon = pokemonData[i];
         document.getElementById('container').innerHTML += /*html*/`
-        <div class="pokemon-card-small-box">
-            <div id="pokemon-card-small${i}" class="pokemon-card-small bg-small">
-                <div class="pokemon-card-top">
+        <div class="pokemon-card-small-box d-f jc-c ai-c">
+            <div id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small">
+                <div class="d-f jc-sb ai-c">
                     <h2 class="fit">${onePokemon['name']}</h2>
                     <span class="fit pokemon-id">#${onePokemon['id']}</span>
                 </div>
-                <div class="pokemon-card-bottom">
-                    <div id="pokemon-types${i}" class="pokemon-types fit"></div>
+                <div class="d-f jc-sb ai-c">
+                    <div id="pokemon-types${i}" class="d-f fd-c fit"></div>
                     <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}">
                 </div>
             </div>

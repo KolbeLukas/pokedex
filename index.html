@@ -14,33 +14,35 @@
 </head>
 
 <body onload="init()">
-    <div id="pokedex">
+    <div id="pokedex" class="p-a">
+        <!-- POKEDEX COVER FRONT -->
         <input class="open" type="checkbox" id="one">
-        <div class="cover">
-            <div class="top-edge"></div>
-            <div class="front">
-                <div class="headline">
+        <div class="cover p-a">
+            <div class="top-edge p-a"></div>
+            <div class="front p-a h-100 w-100">
+                <div class="headline p-a d-f jc-c w-100">
                     <h1>POKEDEX</h1>
                 </div>
-                <div class="triangle-bg">
+                <div class="triangle-bg p-a">
                     <div class="triangle"></div>
                 </div>
-                <div class="front-ornament-bottom-box">
+                <div class="front-ornament-bottom-box p-a d-f jc-c w-100">
                     <div class="front-ornament-bottom"></div>
                 </div>
-                <div class="front-ornament-left-box">
-                    <div class="front-ornament-left">
-                        <div class="front-ornament-left-top"></div>
-                        <div class="front-ornament-left-bottom"></div>
+                <div class="front-ornament-left-box p-a">
+                    <div class="front-ornament-left h-100">
+                        <div class="front-ornament-left-top p-a w-100"></div>
+                        <div class="front-ornament-left-bottom p-a w-100"></div>
                     </div>
                 </div>
-                <label for="one"></label>
+                <label class="p-a h-100 w-100" for="one"></label>
             </div>
-            <div class="back">
+            <!-- POKEDEX COVER BACK -->
+            <div class="back p-a h-100 w-100">
                 <div class="front-ornament-bottom-box">
                     <div class="front-ornament-bottom"></div>
                 </div>
-                <div class="front-ornament-left-box">
+                <div class="front-ornament-left-box p-a">
                     <div class="front-ornament-left">
                         <div class="front-ornament-left-top"></div>
                         <div class="front-ornament-left-bottom"></div>
@@ -48,21 +50,42 @@
                 </div>
             </div>
         </div>
-        <main>
-            <div class="main-top">
-                <input class="search" type="text" placeholder="search..">
-                <div class="light-top">
+        <main class="p-a d-f jc-c h-100">
+            <div class="main-top p-a d-f jc-sa ai-c">
+                <input class="search d-f" type="text" placeholder="Search...">
+                <div class="light-top d-f jc-sa">
                     <img src="img/red-light.png">
                     <img src="img/yellow-light.png">
                     <img src="img/green-light.png">
                 </div>
-                <img class="lens" src="img/lens.png">
+                <img class="h-100" src="img/lens.png">
             </div>
-            <div class="container">
-                <div onscroll="nextPokemons()" id="container">
-                    <div id="loading" class="loading-box">
+            <div class="container d-f jc-c ai-c">
+                <div onscroll="nextPokemons()" id="container" class="d-f jc-c">
+                    <!-- <div id="loading" class="loading-box d-f jc-c ai-c fd-c h-100 w-100">
                         <img src="img/pokeball.png">
                         <span>Loading...</span>
+                    </div> -->
+                    <div id="pokemon-details" class="pokemon-details-box d-f jc-c ai-c h-100 w-100">
+                        <div class="pokemon-details">
+                            <div class="pokemon-details-top bg-big-green">
+                                <div class="back-favorite d-f jc-sb">
+                                    <img src="img/arrow-back.png">
+                                    <img src="img/favorite.png">
+                                </div>
+                                <div>
+                                    <div>
+                                        <h2>Name</h2>
+                                        <span>Type 1</span>
+                                        <span>Type 2</span>
+                                    </div>
+                                    <span>IDqefqefef</span>
+                                </div>
+                            </div>
+                            <div class="pokemon-details-bottom">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
