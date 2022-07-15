@@ -47,7 +47,7 @@ function renderOnePokemon() {
         const onePokemon = pokemonData[i];
         document.getElementById('container').innerHTML += /*html*/`
         <div class="pokemon-card-small-box d-f jc-c ai-c">
-            <div onclick="openDetailsOverlay(${i})" id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small">
+            <div onclick="openDetailsOverlay(${i})" id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small pointer">
                 <div class="d-f jc-sb ai-c">
                     <h2>${onePokemon['name']}</h2>
                     <span class="pokemon-id">#${onePokemon['id']}</span>
@@ -69,7 +69,7 @@ function addTypesOfPokemon(i) {
     for (let t = 0; t < pokemonData[i]['types'].length; t++) {
         let type = pokemonData[i]['types'][t]['type']['name'];
         document.getElementById(`pokemon-types${i}`).innerHTML += /*html*/`
-            <span class="fit small-type">${type}</span>
+            <span class="fit type">${type}</span>
             `;
         addTypeColor(i);
     }
@@ -83,7 +83,7 @@ function addTypeColor(i) {
 }
 
 
-async function addBackgroundToCard(i) {
+function addBackgroundToCard(i) {
     let color = pokemonSpecies[i]['color']['name'];
     document.getElementById(`pokemon-card-small${i}`).classList.add(`bg-small-${color}`);
 }
@@ -93,7 +93,6 @@ function nextPokemons() {
     let content = document.getElementById('container');
 
     if (content.offsetHeight + content.scrollTop >= content.scrollHeight) {
-        console.log('bottom')
         offset += LIMIT;
         LIMIT = 8;
         loadPokemonData();
@@ -110,6 +109,43 @@ function removeLoadingScreen() {
 }
 
 
+/* DETAILS OVERLAY */
+
 function openDetailsOverlay(i) {
-    document.getElementById('details-overlay')
+    document.getElementById('details-overlay').classList.remove('d-none');
+    document.getElementById('name').innerHTML = pokemonData[i]['name'];
+    document.getElementById('id').innerHTML = `#${pokemonData[i]['id']}`;
+    document.getElementById('img').src = pokemonData[i]['sprites']['other']['dream_world']['front_default'];
+    addTypesOfPokemonOverlay(i);
+}
+
+
+function closeDetailsOverlay() {
+    document.getElementById('details-overlay').classList.add('d-none');
+    document.getElementById('types').innerHTML = '';
+    document.getElementById('overlay-top').style.backgroundImage = null;
+    document.getElementById('overlay-top').style.backgroundColor = null;
+}
+
+function addTypesOfPokemonOverlay(i) {
+    for (let t = 0; t < pokemonData[i]['types'].length; t++) {
+        let type = pokemonData[i]['types'][t]['type']['name'];
+        document.getElementById('types').innerHTML += /*html*/`
+            <span class="fit type">${type}</span>
+            `;
+        addTypeColorOverlay();
+        addBackgroundToOverlay(i)
+    }
+}
+
+function addTypeColorOverlay() {
+    let types = document.getElementById('types');
+    let type = types.lastElementChild;
+    type.classList.add(type.innerHTML);
+}
+
+function addBackgroundToOverlay(i) {
+    let color = pokemonSpecies[i]['color']['name'];
+    document.getElementById('overlay-top').style.backgroundImage = `url(img/bg-big-${color}.png)`;
+    document.getElementById('overlay-top').style.backgroundColor = `var(--${color})`;
 }

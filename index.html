@@ -35,7 +35,7 @@
                         <div class="cover-ornament-side-bottom p-a w-100 bg-red"></div>
                     </div>
                 </div>
-                <label class="p-a h-100 w-100" for="one"></label>
+                <label class="p-a h-100 w-100 pointer" for="one"></label>
             </div>
             <!-- POKEDEX COVER BACK -->
             <div class="back p-a h-100 w-100 bg-red">
@@ -65,22 +65,21 @@
                 <!-- OVERLAY FOR POKEMON DETAILS -->
                 <div id="details-overlay" class="details-overlay-box d-f jc-c ai-c h-100 w-100 d-none">
                     <div class="details-overlay">
-                        <div class="details-overlay-top bg-big-green d-f fd-c jc-sb">
+                        <div id="overlay-top" class="details-overlay-top bg-big d-f fd-c jc-sb">
                             <div class="back-favorite d-f jc-sb">
-                                <img src="img/arrow-back.png">
-                                <img src="img/favorite.png">
+                                <img onclick="closeDetailsOverlay()" class="pointer" src="img/arrow-back.png">
+                                <img class="pointer" src="img/favorite.png">
                             </div>
                             <div class="d-f jc-sb ai-c">
                                 <div>
-                                    <h2>Name</h2>
-                                    <div class="details-overlay-types">
-                                        <span class="fit small-type">Type 1</span>
-                                        <span class="fit small-type">Type 2</span>
-                                    </div>
+                                    <h3 id="name"></h3>
+                                    <div id="types" class="details-overlay-types"></div>
                                 </div>
-                                <span>IDqefqefef</span>
+                                <span id="id" class="pokemon-id"></span>
                             </div>
-                            <div style="height: 190px; width: 100%;"></div>
+                            <div class="d-f jc-c w-100">
+                                <img class="img-overlay" id="img">
+                            </div>
                         </div>
                         <div class="details-overlay-bottom"></div>
                     </div>

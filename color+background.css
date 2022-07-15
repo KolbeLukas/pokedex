@@ -1,3 +1,7 @@
+body {
+    background-image: url(img/meadow.jpg);
+}
+
 .normal {
     background-color: #A8A77A;
 }
@@ -78,17 +82,13 @@
     background-color: black;
 }
 
-.bg-red {
+.bg-red, #pokedex:before {
     background-color: #C92323;
 }
 
 .bg-small {
     background-size: contain;
     background-repeat: no-repeat;
-}
-
-body {
-    background-image: url(img/meadow.jpg);
 }
 
 .bg-small-black {
@@ -131,16 +131,31 @@ body {
     background-image: url(img/bg-small-yellow.png);
 }
 
-.bg-big-green {
-    background-color: #49D0B0;
-    background-image: url(img/bg-big-green.png);
+.bg-big {
     background-size: 40%;
     background-repeat: no-repeat;
     background-position: bottom right;
 }
 
-h2 {
-    color: rgba(0, 0, 0, 0.651);
+:root {
+    --black: #4D4D4D;
+    --blue: #76BEFE;
+    --brown: #B96822;
+    --gray: #C8C8C8;
+    --green: #49D0B0;
+    --pink: #F5A9D1;
+    --purple: #C95ACA;
+    --red: #FC6C6E;
+    --white: #FFFFFF;
+    --yellow: #FFD76F;
+}
+
+h1 {
+    color: #ffd500;
+}
+
+h2, h3 {
+    color: rgba(0, 0, 0, 0.65);
 }
 
 .pokemon-id {
@@ -149,4 +164,25 @@ h2 {
 
 .pokemon-types {
     color: rgba(255, 255, 255, 0.85);
+}
+
+.search {
+    border-color: #000000;
+    color: #000000;
+}
+
+.container, .search, .loading-box {
+    background-color: #F1F1F1;
+}
+
+.type {
+    color: rgb(255 255 255 / 90%);
+}
+
+.details-overlay-box {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.details-overlay-bottom {
+    background-color: #fcfcfc;
 }
