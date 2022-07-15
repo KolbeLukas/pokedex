@@ -51,6 +51,7 @@
             </div>
         </div>
         <main class="p-a d-f jc-c h-100 bg-red">
+            <!-- SEARCH SECTION -->
             <div class="main-top p-a d-f jc-sa ai-c bg-red">
                 <input class="search d-f" type="text" placeholder="Search...">
                 <div class="light-top d-f jc-sa">
@@ -61,31 +62,34 @@
                 <img class="h-100" src="img/lens.png">
             </div>
             <div class="container d-f jc-c ai-c">
+                <!-- OVERLAY FOR POKEMON DETAILS -->
+                <div id="details-overlay" class="details-overlay-box d-f jc-c ai-c h-100 w-100 d-none">
+                    <div class="details-overlay">
+                        <div class="details-overlay-top bg-big-green d-f fd-c jc-sb">
+                            <div class="back-favorite d-f jc-sb">
+                                <img src="img/arrow-back.png">
+                                <img src="img/favorite.png">
+                            </div>
+                            <div class="d-f jc-sb ai-c">
+                                <div>
+                                    <h2>Name</h2>
+                                    <div class="details-overlay-types">
+                                        <span class="fit small-type">Type 1</span>
+                                        <span class="fit small-type">Type 2</span>
+                                    </div>
+                                </div>
+                                <span>IDqefqefef</span>
+                            </div>
+                            <div style="height: 190px; width: 100%;"></div>
+                        </div>
+                        <div class="details-overlay-bottom"></div>
+                    </div>
+                </div>
+                <!-- BOX FOR POKEMON RENDERING -->
                 <div onscroll="nextPokemons()" id="container" class="d-f jc-c">
-                    <!-- <div id="loading" class="loading-box d-f jc-c ai-c fd-c h-100 w-100">
+                    <div id="loading" class="loading-box d-f jc-c ai-c fd-c h-100 w-100">
                         <img src="img/pokeball.png">
                         <span>Loading...</span>
-                    </div> -->
-                    <div id="pokemon-details" class="pokemon-details-box d-f jc-c ai-c h-100 w-100">
-                        <div class="pokemon-details">
-                            <div class="pokemon-details-top bg-big-green">
-                                <div class="back-favorite d-f jc-sb">
-                                    <img src="img/arrow-back.png">
-                                    <img src="img/favorite.png">
-                                </div>
-                                <div class="d-f jc-sb ai-c">
-                                    <div>
-                                        <h2>Name</h2>
-                                        <span>Type 1</span>
-                                        <span>Type 2</span>
-                                    </div>
-                                    <span>IDqefqefef</span>
-                                </div>
-                            </div>
-                            <div class="pokemon-details-bottom">
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

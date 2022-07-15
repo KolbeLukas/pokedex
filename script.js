@@ -10,7 +10,6 @@ async function init() {
     let response = await fetch(url);
     let allPokemonNames = await response.json();
     pokemonNames.push(allPokemonNames);
-    console.log(allPokemonNames);
     loadPokemonData();
 }
 
@@ -48,7 +47,7 @@ function renderOnePokemon() {
         const onePokemon = pokemonData[i];
         document.getElementById('container').innerHTML += /*html*/`
         <div class="pokemon-card-small-box d-f jc-c ai-c">
-            <div id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small">
+            <div onclick="openDetailsOverlay(${i})" id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small">
                 <div class="d-f jc-sb ai-c">
                     <h2>${onePokemon['name']}</h2>
                     <span class="pokemon-id">#${onePokemon['id']}</span>
@@ -94,8 +93,9 @@ function nextPokemons() {
     let content = document.getElementById('container');
 
     if (content.offsetHeight + content.scrollTop >= content.scrollHeight) {
+        console.log('bottom')
         offset += LIMIT;
-        LIMIT = 4;
+        LIMIT = 8;
         loadPokemonData();
     }
 }
@@ -107,4 +107,9 @@ function showLoadingScreen() {
 
 function removeLoadingScreen() {
     document.getElementById('loading').classList.add('d-none');
+}
+
+
+function openDetailsOverlay(i) {
+    document.getElementById('details-overlay')
 }
