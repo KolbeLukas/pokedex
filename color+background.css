@@ -150,6 +150,10 @@ body {
     --yellow: #FFD76F;
 }
 
+.light {
+    color: rgba(0, 0, 0, 0.5);
+}
+
 h1 {
     color: #ffd500;
 }
@@ -176,7 +180,7 @@ h2, h3 {
 }
 
 .type {
-    color: rgb(255 255 255 / 90%);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .details-overlay-box {
@@ -184,5 +188,5 @@ h2, h3 {
 }
 
 .details-overlay-bottom {
-    background-color: #fcfcfc;
+    background-color: #ededed;
 }

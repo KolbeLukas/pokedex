@@ -53,8 +53,8 @@
         <main class="p-a d-f jc-c h-100 bg-red">
             <!-- SEARCH SECTION -->
             <div class="main-top p-a d-f jc-sa ai-c bg-red">
-                <input class="search d-f" type="text" placeholder="Search...">
-                <div class="light-top d-f jc-sa">
+                <input class="search d-f w-33" type="text" placeholder="Search...">
+                <div class="light-top d-f jc-sa w-33">
                     <img src="img/red-light.png">
                     <img src="img/yellow-light.png">
                     <img src="img/green-light.png">
@@ -65,6 +65,7 @@
                 <!-- OVERLAY FOR POKEMON DETAILS -->
                 <div id="details-overlay" class="details-overlay-box d-f jc-c ai-c h-100 w-100 d-none">
                     <div class="details-overlay">
+                        <!-- TOP SECTION -->
                         <div id="overlay-top" class="details-overlay-top bg-big d-f fd-c jc-sb">
                             <div class="back-favorite d-f jc-sb">
                                 <img onclick="closeDetailsOverlay()" class="pointer" src="img/arrow-back.png">
@@ -72,7 +73,7 @@
                             </div>
                             <div class="d-f jc-sb ai-c">
                                 <div>
-                                    <h3 id="name"></h3>
+                                    <h3 class="tt-c" id="name"></h3>
                                     <div id="types" class="details-overlay-types"></div>
                                 </div>
                                 <span id="id" class="pokemon-id"></span>
@@ -81,7 +82,27 @@
                                 <img class="img-overlay" id="img">
                             </div>
                         </div>
-                        <div class="details-overlay-bottom"></div>
+                        <!-- BOTTOM SECTION -->
+                        <div class="details-overlay-bottom">
+                            <div class="details-nav d-f jc-sa">
+                                <div id="about" class="pointer light">About</div>
+                                <div id="base-stats" class="pointer light">Base Stats</div>
+                                <div id="evolution" class="pointer light">Evolution</div>
+                            </div>
+                            <div id="details-content" class="details-content w-100">
+                                <table class="w-100">
+                                    <tr>
+                                        <td class="w-33 light">Gender</td>
+                                        <td class="w-20"><img class="mr-10" src="img/male.png"><span class="tt-c">10%</span></td>
+                                        <td><img class="mr-10" src="img/female.png"><span class="tt-c">90%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-33 light">Egg Group</td>
+                                        <td>70cm</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- BOX FOR POKEMON RENDERING -->
