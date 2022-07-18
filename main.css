@@ -41,6 +41,10 @@ body {
   height: 100%;
 }
 
+.w-20 {
+  width: 20%;
+}
+
 .w-33 {
   width: 33%;
 }
@@ -49,8 +53,16 @@ body {
   width: 100%;
 }
 
+.pi-8 {
+  padding-inline: 8px;
+}
+
 .tt-c {
   text-transform: capitalize;
+}
+
+.ta-r {
+  text-align: right;
 }
 
 .pointer {
@@ -336,7 +348,7 @@ h2 {
 }
 
 .details-overlay {
-  height: 95%;
+  height: 90%;
   width: 50%;
   border-radius: 20px;
 }
@@ -373,7 +385,7 @@ h3 {
 }
 
 .details-nav {
-  padding-top: 34px;
+  padding-top: 40px;
 }
 
 .details-nav div {
@@ -384,8 +396,11 @@ h3 {
 }
 
 .details-nav div:hover {
-  color: black;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.active {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5) !important;
 }
 
 .details-content {
@@ -399,12 +414,20 @@ tr {
 }
 
 h4 {
-  margin-top: 16px;
   margin-bottom: 8px;
 }
 
 .female-img {
   margin-left: 30px;
+}
+
+.stats-bar-bg {
+  width: 100%;
+  height: 5px;
+}
+
+.stats-bar {
+  height: 100%;
 }
 
 /* RESPONSIVE */

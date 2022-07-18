@@ -184,9 +184,21 @@ h2, h3 {
 }
 
 .details-overlay-box {
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .details-overlay-bottom {
     background-color: #ededed;
+}
+
+.details-nav div:hover {
+    color: black;
+}
+
+.active {
+    color: black;
+}
+
+.stats-bar-bg {
+    background-color: rgb(220 220 224);
 }
