@@ -109,6 +109,7 @@ function removeLoadingScreen() {
 
 
 /* DETAILS OVERLAY */
+/* TOP SECTION */
 
 function openDetailsOverlay(i) {
     document.getElementById('details-overlay').classList.remove('d-none');
@@ -125,6 +126,7 @@ function closeDetailsOverlay() {
     document.getElementById('types').innerHTML = '';
 }
 
+
 function addTypesOfPokemonOverlay(i) {
     for (let t = 0; t < pokemonData[i]['types'].length; t++) {
         let type = pokemonData[i]['types'][t]['type']['name'];
@@ -136,11 +138,13 @@ function addTypesOfPokemonOverlay(i) {
     }
 }
 
+
 function addTypeColorOverlay() {
     let types = document.getElementById('types');
     let type = types.lastElementChild;
     type.classList.add(type.innerHTML);
 }
+
 
 function addBackgroundToOverlay(i) {
     let color = pokemonSpecies[i]['color']['name'];
@@ -148,6 +152,8 @@ function addBackgroundToOverlay(i) {
     document.getElementById('overlay-top').style.backgroundColor = `var(--${color})`;
 }
 
+
+/* BOTTOM SECTION */
 
 function addOnclickToNavElements(i) {
     document.getElementById('about').setAttribute('onclick', `renderCoreInfos(${i})`);
@@ -157,7 +163,14 @@ function addOnclickToNavElements(i) {
 }
 
 
+function removeActiveClass() {
+    
+}
+
+/* ABOUT */
+
 function renderCoreInfos(i) {
+    document.getElementById('about').classList.add('active');
     document.getElementById('details-content').innerHTML = /*html*/`
         <table class="w-100">
             <tr>
@@ -176,6 +189,10 @@ function renderCoreInfos(i) {
                 <td class="w-33 light">Abilities</td>
                 <td class="tt-c" id="abilities"></td>
             </tr>
+            <tr>
+                <td class="w-33 light">Capture-Rate</td>
+                <td class="tt-c" id="capture-rate"></td>
+            </tr>
         </table>
         <h4>Breeding</h4>
         <table class="w-100">
@@ -192,12 +209,11 @@ function renderCoreInfos(i) {
                 <td class="w-33 light">Egg Group</td>
                 <td class="tt-c" id="egg-groups"></td>
             </tr>
-        </table>
-        <h4>Description</h4>
-        <!-- <span>${pokemonSpecies}</span> -->`;
+        </table>`;
     addAbilities(i);
     addGenderRate(i);
     addEggGroups(i);
+    addCaptureRate(i);
 }
 
 
@@ -220,8 +236,8 @@ function addGenderRate(i) {
         let female = (pokemonSpecies[i]['gender_rate'] * 100) / 8;
         let male = ((8 - pokemonSpecies[i]['gender_rate']) * 100) / 8;
 
-        document.getElementById('male').innerHTML = `${male} %`;
-        document.getElementById('female').innerHTML = `${female} %`;
+        document.getElementById('male').innerHTML = `${male}%`;
+        document.getElementById('female').innerHTML = `${female}%`;
     }
 }
 
@@ -235,4 +251,120 @@ function addEggGroups(i) {
         eggGroups.push(eggGroup);
     }
     document.getElementById('egg-groups').innerHTML = eggGroups.join(', ');
+}
+
+
+function addCaptureRate(i) {
+    let captureRate = pokemonSpecies[i]['capture_rate'];
+    let ratePercent = (captureRate * 100) / 255;
+
+    document.getElementById('capture-rate').innerHTML = `${ratePercent.toFixed(2)}%`;
+}
+
+/* BASE STATS */
+
+function renderBaseStats(i) {
+    document.getElementById('details-content').innerHTML = /*html*/`
+        <table class="w-100">
+            <tr>
+                <td class="w-20 light">HP</td>
+                <td class="ta-r">${pokemonData[i]['stats'][0]['base_stat']}</td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="stat-bar${0}" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-20 light">Attack</td>
+                <td class="ta-r">${pokemonData[i]['stats'][1]['base_stat']}</td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="stat-bar${1}" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-20 light">Defense</td>
+                <td class="ta-r">${pokemonData[i]['stats'][2]['base_stat']}</td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="stat-bar${2}" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-20 light">Sp. Atk.</td>
+                <td class="ta-r">${pokemonData[i]['stats'][3]['base_stat']}</td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="stat-bar${3}" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-20 light">Sp. Def.</td>
+                <td class="ta-r">${pokemonData[i]['stats'][4]['base_stat']}</td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="stat-bar${4}" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-20 light">Speed</td>
+                <td class="ta-r">${pokemonData[i]['stats'][5]['base_stat']}</td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="stat-bar${5}" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w-20 light">Total</td>
+                <td id="total" class="ta-r" style="width: 38px"></td>
+                <td class="pi-8">
+                    <div class="stats-bar-bg">
+                        <div id="total-bar" class="stats-bar"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>`;
+    renderStatBars(i);
+    renderTotal(i);
+}
+
+
+function renderStatBars(i) {
+    let maxStat = [255, 190, 250, 194, 250, 200];
+
+    for (let j = 0; j < maxStat.length; j++) {
+        const max = maxStat[j];
+        let stat = pokemonData[i]['stats'][j]['base_stat'];
+        let percent = (stat * 100) / max;
+
+        document.getElementById(`stat-bar${j}`).style.width = `${percent}%`;
+        if (percent > 50) {
+            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(90 175 105)";
+        } else {
+            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(255 56 11)";
+        }
+    }
+}
+
+
+function renderTotal(i) {
+    const stats = pokemonData[i]['stats'];
+    let sum = 0;
+    stats.forEach(element => {
+        sum += element.base_stat;
+    });
+    document.getElementById('total').innerHTML = sum;
+    let percent = (sum * 100) / 1125;
+    document.getElementById('total-bar').style.width = `${percent}%`;
+    if (percent > 50) {
+        document.getElementById('total-bar').style.backgroundColor = "rgb(90 175 105)";
+    } else {
+        document.getElementById('total-bar').style.backgroundColor = "rgb(255 56 11)";
+    }
 }
