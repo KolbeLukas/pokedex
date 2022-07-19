@@ -380,6 +380,18 @@ async function renderEvolutionList(i) {
     document.getElementById('about').classList.remove('active');
     document.getElementById('base-stats').classList.remove('active');
     document.getElementById('evolution').classList.add('active');
+    document.getElementById('details-content').innerHTML = /*html*/`
+    <h4>Evolution Chain</h4>
+    <div class="d-f jc-sb ai-c">
+        <div class="w-33" id="evolution0"></div>
+        <img src="img/arrow-evolution.png">
+        <div class="w-33" id="evolution1"></div>
+    </div>
+    <div id="second-evolution" class="d-f jc-sb ai-c">
+        <div class="w-33" id="evolution2"></div>
+        <img src="img/arrow-evolution.png">
+        <div class="w-33" id="evolution3"></div>
+    </div>`;
     await getEvolutionData(i);
 }
 
@@ -388,19 +400,28 @@ async function getEvolutionData(i) {
     let url = pokemonSpecies[i]['evolution_chain']['url'];
     let response = await fetch(url);
     let evolution = await response.json();
-    let evolutionOne = evolution['chain']['evolves_to'];
+    let data = evolution['chain']['evolves_to'];
+    renderPokemonEvolutionSteps(evolution, data);
+}
+    
 
-    if (evolutionOne.length >= 1) {
+async function renderPokemonEvolutionSteps(evolution, data) {
+    if (data.length >= 1) {
         let base = evolution['chain']['species']['name'];
-        getBasePokemon(base);
-        for (let f = 0; f < evolutionOne.length; f++) {
-            let first = evolutionOne[f]['species']['name'];
-            let evolutionTwo = evolutionOne[f]['evolves_to'];
-            getFirstEvolution(first);
-            if (evolutionTwo.length >= 1) {
-                console.log('evolution2');
-            } else {
-                console.log('only one')
+        await renderPokemonEvolutionImg(base, 0);
+        for (let f = 0; f < data.length; f++) {
+            let first = data[f]['species']['name'];
+            await renderPokemonEvolutionImg(first, 1);
+            let second = data[f]['evolves_to'];
+            if (second.length >= 1) {
+                await renderPokemonEvolutionImg(first, 2);
+                for (let s = 0; s < second.length; s++) {
+                    let secondName = second[s]['species']['name']
+                    await renderPokemonEvolutionImg(secondName, 3);
+                }
+            }
+            else {
+                document.getElementById('second-evolution').classList.add('d-none');
             }
         }
     } else {
@@ -409,29 +430,16 @@ async function getEvolutionData(i) {
 }
 
 
-async function getBasePokemon(base) {
-    for (let b = 0; b < pokemonNames[0]['results'].length; b++) {
-        if (pokemonNames[0]['results'][b]['name'] === base) {
-            let url = pokemonNames[0]['results'][b]['url'];
-            let response = await fetch(url);
-            let data = await response.json();
-            document.getElementById('details-content').innerHTML = /*html*/`
-            <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}"
-                onerror="this.onerror=null; this.src='${data['sprites']['other']['home']['front_default']}'">`;
-        }
-    }
-}
-
-
-async function getFirstEvolution(first) {
+async function renderPokemonEvolutionImg(name, x) {
     for (let e = 0; e < pokemonNames[0]['results'].length; e++) {
-        if (pokemonNames[0]['results'][e]['name'] === first) {
+        if (pokemonNames[0]['results'][e]['name'] === name) {
             let url = pokemonNames[0]['results'][e]['url'];
             let response = await fetch(url);
             let data = await response.json();
-            document.getElementById('details-content').innerHTML += /*html*/`
+            document.getElementById(`evolution${x}`).innerHTML += /*html*/`
             <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}"
                 onerror="this.onerror=null; this.src='${data['sprites']['other']['home']['front_default']}'">`;
+            return;    
         }
     }
 }

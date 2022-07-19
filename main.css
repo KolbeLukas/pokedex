@@ -46,7 +46,7 @@ body {
 }
 
 .w-33 {
-  width: 33%;
+  width: 33.33%;
 }
 
 .w-100 {
@@ -409,12 +409,17 @@ h3 {
   margin-top: 10px;
 }
 
+table {
+  padding-bottom: 10px;
+}
+
 tr {
   height: 30px;
 }
 
 h4 {
   margin-bottom: 8px;
+  margin-top: 10px;
 }
 
 .female-img {
@@ -431,8 +436,8 @@ h4 {
 }
 
 .evol-img {
-  height: 40%;
-  width: 40%;
+  height: 10vh;
+  width: 10vw;
 }
 
 /* RESPONSIVE */
