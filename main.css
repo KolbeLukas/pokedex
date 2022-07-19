@@ -430,6 +430,11 @@ h4 {
   height: 100%;
 }
 
+.evol-img {
+  height: 40%;
+  width: 40%;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 940px) {

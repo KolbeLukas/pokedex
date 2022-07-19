@@ -54,7 +54,8 @@ function renderOnePokemon() {
                     </div>
                     <div class="d-f jc-sb ai-c">
                         <div id="pokemon-types${i}" class="d-f fd-c"></div>
-                        <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}">
+                        <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}"
+                            onerror="this.onerror=null; this.src='${onePokemon['sprites']['other']['home']['front_default']}'">
                     </div>
                 </div>
             </div>`;
@@ -164,13 +165,15 @@ function addOnclickToNavElements(i) {
 
 
 function removeActiveClass() {
-    
+
 }
 
 /* ABOUT */
 
 function renderCoreInfos(i) {
     document.getElementById('about').classList.add('active');
+    document.getElementById('evolution').classList.remove('active');
+    document.getElementById('base-stats').classList.remove('active');
     document.getElementById('details-content').innerHTML = /*html*/`
         <table class="w-100">
             <tr>
@@ -264,6 +267,9 @@ function addCaptureRate(i) {
 /* BASE STATS */
 
 function renderBaseStats(i) {
+    document.getElementById('about').classList.remove('active');
+    document.getElementById('evolution').classList.remove('active');
+    document.getElementById('base-stats').classList.add('active');
     document.getElementById('details-content').innerHTML = /*html*/`
         <table class="w-100">
             <tr>
@@ -366,5 +372,66 @@ function renderTotal(i) {
         document.getElementById('total-bar').style.backgroundColor = "rgb(90 175 105)";
     } else {
         document.getElementById('total-bar').style.backgroundColor = "rgb(255 56 11)";
+    }
+}
+
+
+async function renderEvolutionList(i) {
+    document.getElementById('about').classList.remove('active');
+    document.getElementById('base-stats').classList.remove('active');
+    document.getElementById('evolution').classList.add('active');
+    await getEvolutionData(i);
+}
+
+
+async function getEvolutionData(i) {
+    let url = pokemonSpecies[i]['evolution_chain']['url'];
+    let response = await fetch(url);
+    let evolution = await response.json();
+    let evolutionOne = evolution['chain']['evolves_to'];
+
+    if (evolutionOne.length >= 1) {
+        let base = evolution['chain']['species']['name'];
+        getBasePokemon(base);
+        for (let f = 0; f < evolutionOne.length; f++) {
+            let first = evolutionOne[f]['species']['name'];
+            let evolutionTwo = evolutionOne[f]['evolves_to'];
+            getFirstEvolution(first);
+            if (evolutionTwo.length >= 1) {
+                console.log('evolution2');
+            } else {
+                console.log('only one')
+            }
+        }
+    } else {
+        console.log('single')
+    }
+}
+
+
+async function getBasePokemon(base) {
+    for (let b = 0; b < pokemonNames[0]['results'].length; b++) {
+        if (pokemonNames[0]['results'][b]['name'] === base) {
+            let url = pokemonNames[0]['results'][b]['url'];
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById('details-content').innerHTML = /*html*/`
+            <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}"
+                onerror="this.onerror=null; this.src='${data['sprites']['other']['home']['front_default']}'">`;
+        }
+    }
+}
+
+
+async function getFirstEvolution(first) {
+    for (let e = 0; e < pokemonNames[0]['results'].length; e++) {
+        if (pokemonNames[0]['results'][e]['name'] === first) {
+            let url = pokemonNames[0]['results'][e]['url'];
+            let response = await fetch(url);
+            let data = await response.json();
+            document.getElementById('details-content').innerHTML += /*html*/`
+            <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}"
+                onerror="this.onerror=null; this.src='${data['sprites']['other']['home']['front_default']}'">`;
+        }
     }
 }
