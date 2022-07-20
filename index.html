@@ -17,7 +17,7 @@
     <div id="pokedex" class="p-a">
         <!-- POKEDEX COVER FRONT -->
         <input class="open" type="checkbox" id="one">
-        <div class="cover p-a bg-red">
+        <div class="cover p-a bg-red z-5">
             <div class="top-edge p-a bg-red"></div>
             <div class="front p-a h-100 w-100">
                 <div class="headline p-a d-f jc-c w-100">
@@ -53,7 +53,7 @@
         <main class="p-a d-f jc-c h-100 bg-red">
             <!-- SEARCH SECTION -->
             <div class="main-top p-a d-f jc-sa ai-c bg-red">
-                <input class="search d-f w-33" type="text" placeholder="Search...">
+                <input oninput="searchPokemon()" id="search" class="search d-f w-33" type="text" placeholder="Search...">
                 <div class="light-top d-f jc-sa w-33">
                     <img src="img/red-light.png">
                     <img src="img/yellow-light.png">
@@ -63,13 +63,13 @@
             </div>
             <div class="container d-f jc-c ai-c">
                 <!-- OVERLAY FOR POKEMON DETAILS -->
-                <div id="details-overlay" class="details-overlay-box d-f jc-c ai-c h-100 w-100 d-none">
+                <div id="details-overlay" class="details-overlay-box p-f z-5 d-f jc-c ai-c d-none">
                     <div class="details-overlay">
                         <!-- TOP SECTION -->
                         <div id="overlay-top" class="details-overlay-top bg-big d-f fd-c jc-sb">
                             <div class="back-favorite d-f jc-sb">
                                 <img onclick="closeDetailsOverlay()" class="pointer" src="img/arrow-back.png">
-                                <img class="pointer" src="img/favorite.png">
+                                <img onclick="underConstruction()" class="pointer" src="img/favorite.png">
                             </div>
                             <div class="d-f jc-sb ai-c">
                                 <div>
@@ -105,13 +105,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- BOX FOR POKEMON RENDERING -->
-                <div onscroll="nextPokemons()" id="container" class="d-f jc-c">
-                    <div id="loading" class="loading-box d-f jc-c ai-c fd-c h-100 w-100">
-                        <img src="img/pokeball.png">
-                        <span>Loading...</span>
-                    </div>
+                <div id="loading" class="p-f d-f jc-c ai-c fd-c h-100 w-100">
+                    <img class="loading-img" src="img/pokeball.png">
+                    <span>Loading...</span>
                 </div>
+                <!-- BOX FOR POKEMON RENDERING -->
+                <div onscroll="nextPokemons()" id="container" class="d-f jc-c"></div>
             </div>
         </main>
     </div>

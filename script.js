@@ -1,4 +1,5 @@
-let pokemonNames = [];
+let pokemonNames;
+let allPokemons;
 let pokemonData = [];
 let pokemonSpecies = [];
 let LIMIT = 48;
@@ -6,10 +7,11 @@ let offset = 0;
 
 
 async function init() {
-    let url = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
+    let url = 'https://pokeapi.co/api/v2/pokemon?limit=898&offset=0';
     let response = await fetch(url);
-    let allPokemonNames = await response.json();
-    pokemonNames.push(allPokemonNames);
+    let allPokemonNames = await response.json(); 
+    allPokemons = allPokemonNames['results'];
+    pokemonNames = allPokemons;
     loadPokemonData();
 }
 
@@ -24,7 +26,7 @@ async function loadPokemonData() {
 
 async function getPokemonData() {
     for (let i = offset; i < offset + LIMIT; i++) {
-        let url = pokemonNames[0]['results'][i]['url'];
+        let url = pokemonNames[i]['url'];
         let response = await fetch(url);
         let data = await response.json();
         pokemonData.push(data);
@@ -54,13 +56,22 @@ function renderOnePokemon() {
                     </div>
                     <div class="d-f jc-sb ai-c">
                         <div id="pokemon-types${i}" class="d-f fd-c"></div>
-                        <img class="pokemon-img-small" src="${onePokemon['sprites']['other']['dream_world']['front_default']}"
-                            onerror="this.onerror=null; this.src='${onePokemon['sprites']['other']['home']['front_default']}'">
+                        <img id="pokemon-img${i}" class="pokemon-img-small">
                     </div>
                 </div>
             </div>`;
+        addPokemonImg(onePokemon, i);
         addTypesOfPokemon(i);
         addBackgroundToCard(i);
+    }
+}
+
+
+function addPokemonImg(onePokemon, i) {
+    if (onePokemon['sprites']['other']['dream_world']['front_default'] == null) {
+        document.getElementById(`pokemon-img${i}`).src = onePokemon['sprites']['other']['home']['front_default'];
+    } else {
+        document.getElementById(`pokemon-img${i}`).src = onePokemon['sprites']['other']['dream_world']['front_default'];
     }
 }
 
@@ -91,16 +102,21 @@ function addBackgroundToCard(i) {
 
 function nextPokemons() {
     let content = document.getElementById('container');
-
+    console.log('srolled')
     if (content.offsetHeight + content.scrollTop >= content.scrollHeight) {
-        offset += LIMIT;
-        LIMIT = 8;
+        if (pokemonNames.length - 8 >= (offset + LIMIT)){
+            offset += LIMIT;
+            LIMIT = 8;
+        } else {
+            offset += LIMIT;
+            LIMIT = pokemonNames.length - offset;
+        }
         loadPokemonData();
     }
 }
 
 function showLoadingScreen() {
-    document.getElementById('loading').classList.remove('d.none');
+    document.getElementById('loading').classList.remove('d-none');
 }
 
 
@@ -116,7 +132,11 @@ function openDetailsOverlay(i) {
     document.getElementById('details-overlay').classList.remove('d-none');
     document.getElementById('name').innerHTML = pokemonData[i]['name'];
     document.getElementById('id').innerHTML = `#${pokemonData[i]['id']}`;
-    document.getElementById('img').src = pokemonData[i]['sprites']['other']['dream_world']['front_default'];
+    if (pokemonData[i]['sprites']['other']['dream_world']['front_default'] == null) {
+        document.getElementById('img').src = pokemonData[i]['sprites']['other']['home']['front_default'];
+    } else {
+        document.getElementById('img').src = pokemonData[i]['sprites']['other']['dream_world']['front_default'];
+    }
     addTypesOfPokemonOverlay(i);
     addOnclickToNavElements(i);
 }
@@ -154,6 +174,36 @@ function addBackgroundToOverlay(i) {
 }
 
 
+async function searchPokemon() {
+    document.getElementById('container').innerHTML = '';
+    document.getElementById('search').disabled = true;
+    showLoadingScreen();
+    pokemonNames = [];
+    pokemonData = [];
+    pokemonSpecies = [];
+    let search = document.getElementById('search').value;
+    search = search.toLowerCase();
+    for (let i = 0; i < allPokemons.length; i++) {
+        let name = allPokemons[i]['name'];
+        if (name.indexOf(search) == 0 && name.includes(search)) {
+            pokemonNames.push(allPokemons[i]);
+        }
+    }
+    offset = 0;
+    LIMIT = 48;
+    if (LIMIT > pokemonNames.length) {
+        LIMIT = pokemonNames.length;
+    }
+    console.log(pokemonNames)
+    console.log(pokemonData)
+    console.log(pokemonSpecies)
+    console.log('limit', LIMIT)
+    console.log('off', offset)
+    await loadPokemonData();
+    document.getElementById('search').disabled = false;
+}
+
+
 /* BOTTOM SECTION */
 
 function addOnclickToNavElements(i) {
@@ -163,10 +213,6 @@ function addOnclickToNavElements(i) {
     renderCoreInfos(i);
 }
 
-
-function removeActiveClass() {
-
-}
 
 /* ABOUT */
 
@@ -382,12 +428,12 @@ async function renderEvolutionList(i) {
     document.getElementById('evolution').classList.add('active');
     document.getElementById('details-content').innerHTML = /*html*/`
     <h4>Evolution Chain</h4>
-    <div class="d-f jc-sb ai-c">
+    <div id="first-evolution-step" class="d-f jc-sa ai-c">
         <div class="w-33" id="evolution0"></div>
         <img src="img/arrow-evolution.png">
         <div class="w-33" id="evolution1"></div>
     </div>
-    <div id="second-evolution" class="d-f jc-sb ai-c">
+    <div id="second-evolution-step" class="d-f jc-sa ai-c">
         <div class="w-33" id="evolution2"></div>
         <img src="img/arrow-evolution.png">
         <div class="w-33" id="evolution3"></div>
@@ -403,7 +449,7 @@ async function getEvolutionData(i) {
     let data = evolution['chain']['evolves_to'];
     renderPokemonEvolutionSteps(evolution, data);
 }
-    
+
 
 async function renderPokemonEvolutionSteps(evolution, data) {
     if (data.length >= 1) {
@@ -421,25 +467,37 @@ async function renderPokemonEvolutionSteps(evolution, data) {
                 }
             }
             else {
-                document.getElementById('second-evolution').classList.add('d-none');
+                document.getElementById('second-evolution-step').classList.add('d-none');
             }
         }
     } else {
-        console.log('single')
+        document.getElementById('first-evolution-step').classList.add('d-none');
+        document.getElementById('second-evolution-step').classList.add('d-none');
+        document.getElementById('details-content').innerHTML += /*html*/`
+        <span>This Pokemon has no evolutions.</span>`;
     }
 }
 
 
 async function renderPokemonEvolutionImg(name, x) {
-    for (let e = 0; e < pokemonNames[0]['results'].length; e++) {
-        if (pokemonNames[0]['results'][e]['name'] === name) {
-            let url = pokemonNames[0]['results'][e]['url'];
+    for (let e = 0; e < pokemonNames.length; e++) {
+        if (pokemonNames[e]['name'] === name) {
+            let url = pokemonNames[e]['url'];
             let response = await fetch(url);
             let data = await response.json();
-            document.getElementById(`evolution${x}`).innerHTML += /*html*/`
-            <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}"
-                onerror="this.onerror=null; this.src='${data['sprites']['other']['home']['front_default']}'">`;
-            return;    
+            if (data['sprites']['other']['dream_world']['front_default'] == null) {
+                document.getElementById(`evolution${x}`).innerHTML += /*html*/`
+                    <img class="evol-img" src="${data['sprites']['other']['home']['front_default']}">`;
+            } else {
+                document.getElementById(`evolution${x}`).innerHTML += /*html*/`
+                    <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}">`;
+            }
+            return;
         }
     }
+}
+
+
+function underConstruction() {
+    alert('under construction');
 }
