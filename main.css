@@ -354,7 +354,7 @@ h2 {
 
 .details-overlay {
   height: 90%;
-  width: 50%;
+  width: 440px;
   border-radius: 20px;
 }
 
@@ -441,8 +441,8 @@ h4 {
 }
 
 .evol-img {
-  height: 100px;
-  width: 100px;
+  height: 70%;
+  width: 70%;
 }
 
 /* RESPONSIVE */
@@ -454,8 +454,20 @@ h4 {
   }
 }
 
+@media (max-width: 500px) {
+  .details-overlay {
+    width: 90%;
+  }
+}
+
 @media (max-width: 400px) {
   h1 {
     font-size: 30px;
+  }
+}
+
+@media (max-height: 800px) {
+  .details-overlay {
+    height: 99%;
   }
 }
