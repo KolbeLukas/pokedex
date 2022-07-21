@@ -532,12 +532,12 @@ function renderEvolutionListContent(i) {
         <div id="first-evolution-step" class="d-f jc-sa ai-c p-b">
             <div class="w-33 d-f jc-c" id="evolution0"></div>
             <img src="img/arrow-evolution.png">
-            <div class="w-33 d-f jc-c" id="evolution1"></div>
+            <div class="w-33 d-f jc-c fd-c" id="evolution1"></div>
         </div>
         <div id="second-evolution-step" class="d-f jc-sa ai-c">
             <div class="w-33 d-f jc-c" id="evolution2"></div>
             <img src="img/arrow-evolution.png">
-            <div class="w-33 d-f jc-c" id="evolution3"></div>
+            <div class="w-33 d-f jc-c fd-c" id="evolution3"></div>
         </div>`;
 }
 
