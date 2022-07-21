@@ -63,7 +63,7 @@
             </div>
             <div class="container d-f jc-c ai-c">
                 <!-- OVERLAY FOR POKEMON DETAILS -->
-                <div id="details-overlay" class="details-overlay-box p-f z-5 d-f jc-c ai-c d-none">
+                <div id="details-overlay" class="details-overlay-box p-f z-2 d-f jc-c ai-c vis n-vis">
                     <div class="details-overlay">
                         <!-- TOP SECTION -->
                         <div id="overlay-top" class="details-overlay-top bg-big d-f fd-c jc-sb">
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="loading" class="p-f d-f jc-c ai-c fd-c">
+                <div id="loading" class="p-f d-f jc-c ai-c fd-c z-3">
                     <img class="loading-img" src="img/pokeball.png">
                     <span>Loading...</span>
                 </div>
@@ -113,6 +113,23 @@
                     <img class="loading-img" src="img/pokeball.png">
                     <span>No Pokemon found</span>
                 </div>
+                <div  class="menu-container z-1">
+                    <nav>
+                    <ul class="d-f jc-c">
+                      <li class="dropdown dropdown-6">
+                        <img class="menu-img" src="img/pokeball.png">
+                        <ul class="dropdown_menu dropdown_menu--animated dropdown_menu">
+                          <li class="pointer">
+                            <a class="d-f jc-c ai-c" href="">Impressum</a>
+                          </li>
+                          <li class="pointer">
+                            <a class="d-f jc-c ai-c" href="https://pokeapi.co/" target="_blank">API</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+                  </div>
                 <!-- BOX FOR POKEMON RENDERING -->
                 <div onscroll="loadNextPokemons()" id="container" class="d-f jc-c"></div>
             </div>

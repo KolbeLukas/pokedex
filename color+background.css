@@ -202,3 +202,15 @@ h2, h3 {
 .stats-bar-bg {
     background-color: rgb(220 220 224);
 }
+
+.dropdown_menu li {
+    background-color: #F1F1F1;
+}
+
+.dropdown_menu li:hover {
+    background-color: #dfdfdf;
+}
+
+a {
+    color: rgba(0, 0, 0, 0.65);
+}

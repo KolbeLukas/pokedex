@@ -122,6 +122,7 @@ function setLimitOfNewLoadedPokemon() {
 let timeout = null;
 function searchPokemon() {
     document.getElementById('not-found').classList.add('d-none');
+    closeDetailsOverlay();
     clearTimeout(timeout);
     showLoadingScreen();
     timeout = setTimeout(loadSearchedPokemons, 1500);
@@ -164,7 +165,7 @@ function setMaxLoadedPokemon() {
 }
 
 function showNotFound() {
-    if(document.getElementById('container').innerHTML == '') {
+    if (document.getElementById('container').innerHTML == '') {
         document.getElementById('not-found').classList.remove('d-none');
     }
 }
@@ -174,7 +175,7 @@ function showNotFound() {
 /* TOP SECTION */
 
 function openDetailsOverlay(i) {
-    document.getElementById('details-overlay').classList.remove('d-none');
+    document.getElementById('details-overlay').classList.remove('n-vis');
     document.getElementById('name').innerHTML = pokemonData[i]['name'];
     document.getElementById('id').innerHTML = `#${pokemonData[i]['id']}`;
     if (pokemonData[i]['sprites']['other']['dream_world']['front_default'] == null) {
@@ -188,10 +189,9 @@ function openDetailsOverlay(i) {
 
 
 function closeDetailsOverlay() {
-    document.getElementById('details-overlay').classList.add('d-none');
+    document.getElementById('details-overlay').classList.add('n-vis');
     document.getElementById('types').innerHTML = '';
 }
-
 
 function addTypesOfPokemonOverlay(i) {
     for (let t = 0; t < pokemonData[i]['types'].length; t++) {
@@ -204,13 +204,11 @@ function addTypesOfPokemonOverlay(i) {
     }
 }
 
-
 function addTypeColorOverlay() {
     let types = document.getElementById('types');
     let type = types.lastElementChild;
     type.classList.add(type.innerHTML);
 }
-
 
 function addBackgroundToOverlay(i) {
     let color = pokemonSpecies[i]['color']['name'];
@@ -235,7 +233,188 @@ function renderCoreInfos(i) {
     document.getElementById('about').classList.add('active');
     document.getElementById('evolution').classList.remove('active');
     document.getElementById('base-stats').classList.remove('active');
-    document.getElementById('details-content').innerHTML = /*html*/`
+    document.getElementById('details-content').innerHTML = renderCoreInfosContent(i);
+    addAbilities(i);
+    addGenderRate(i);
+    addEggGroups(i);
+    addCaptureRate(i);
+}
+
+function addAbilities(i) {
+    let abilitiesData = pokemonData[i]['abilities'];
+    let abilities = [];
+
+    for (let a = 0; a < abilitiesData.length; a++) {
+        let ability = abilitiesData[a]['ability']['name'];
+        abilities.push(ability);
+    }
+    document.getElementById('abilities').innerHTML = abilities.join(', ');
+}
+
+function addGenderRate(i) {
+    if (pokemonSpecies[i]['gender_rate'] == -1) {
+        document.getElementById('gender').innerHTML = 'Genderless';
+    } else {
+        let female = (pokemonSpecies[i]['gender_rate'] * 100) / 8;
+        let male = ((8 - pokemonSpecies[i]['gender_rate']) * 100) / 8;
+
+        document.getElementById('male').innerHTML = `${male}%`;
+        document.getElementById('female').innerHTML = `${female}%`;
+    }
+}
+
+function addEggGroups(i) {
+    let eggGroupsData = pokemonSpecies[i]['egg_groups'];
+    let eggGroups = [];
+
+    for (let e = 0; e < eggGroupsData.length; e++) {
+        let eggGroup = eggGroupsData[e]['name'];
+        eggGroups.push(eggGroup);
+    }
+    document.getElementById('egg-groups').innerHTML = eggGroups.join(', ');
+}
+
+function addCaptureRate(i) {
+    let captureRate = pokemonSpecies[i]['capture_rate'];
+    let ratePercent = (captureRate * 100) / 255;
+
+    document.getElementById('capture-rate').innerHTML = `${ratePercent.toFixed(2)}%`;
+}
+
+/* BASE STATS */
+
+function renderBaseStats(i) {
+    document.getElementById('about').classList.remove('active');
+    document.getElementById('evolution').classList.remove('active');
+    document.getElementById('base-stats').classList.add('active');
+    document.getElementById('details-content').innerHTML = renderBaseStatsContent(i);
+    renderStatBars(i);
+    renderTotal(i);
+}
+
+function renderStatBars(i) {
+    let maxStat = [255, 190, 250, 194, 250, 200];
+
+    for (let j = 0; j < maxStat.length; j++) {
+        const max = maxStat[j];
+        let stat = pokemonData[i]['stats'][j]['base_stat'];
+        let percent = (stat * 100) / max;
+
+        document.getElementById(`stat-bar${j}`).style.width = `${percent}%`;
+        if (percent > 50) {
+            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(90 175 105)";
+        } else {
+            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(255 56 11)";
+        }
+    }
+}
+
+function renderTotal(i) {
+    const stats = pokemonData[i]['stats'];
+    let sum = 0;
+    stats.forEach(element => {
+        sum += element.base_stat;
+    });
+    document.getElementById('total').innerHTML = sum;
+    let percent = (sum * 100) / 1125;
+    document.getElementById('total-bar').style.width = `${percent}%`;
+    if (percent > 50) {
+        document.getElementById('total-bar').style.backgroundColor = "rgb(90 175 105)";
+    } else {
+        document.getElementById('total-bar').style.backgroundColor = "rgb(255 56 11)";
+    }
+}
+
+
+/* EVOLUTION */
+
+async function renderEvolutionList(i) {
+    document.getElementById('about').classList.remove('active');
+    document.getElementById('base-stats').classList.remove('active');
+    document.getElementById('evolution').classList.add('active');
+    document.getElementById('details-content').innerHTML = renderEvolutionListContent(i);
+    await getEvolutionData(i);
+}
+
+async function getEvolutionData(i) {
+    let url = pokemonSpecies[i]['evolution_chain']['url'];
+    let response = await fetch(url);
+    let evolution = await response.json();
+    let data = evolution['chain']['evolves_to'];
+    renderPokemonEvolutionSteps(evolution, data);
+}
+
+async function renderPokemonEvolutionSteps(evolution, data) {
+    if (data.length >= 1) {
+        let base = evolution['chain']['species']['name'];
+        await renderPokemonEvolutionImg(base, 0);
+        for (let f = 0; f < data.length; f++) {
+            let first = data[f]['species']['name'];
+            await renderPokemonEvolutionImg(first, 1);
+            let second = data[f]['evolves_to'];
+            if (second.length >= 1) {
+                await renderPokemonEvolutionImg(first, 2);
+                for (let s = 0; s < second.length; s++) {
+                    let secondName = second[s]['species']['name']
+                    await renderPokemonEvolutionImg(secondName, 3);
+                }
+            }
+            else {
+                document.getElementById('second-evolution-step').classList.add('d-none');
+            }
+        }
+    } else {
+        noEvolutions();
+    }
+}
+
+function noEvolutions() {
+    document.getElementById('first-evolution-step').classList.add('d-none');
+    document.getElementById('second-evolution-step').classList.add('d-none');
+    document.getElementById('details-content').innerHTML += /*html*/`
+        <span>This Pokemon has no evolutions.</span>`;
+}
+
+async function renderPokemonEvolutionImg(name, x) {
+    for (let e = 0; e < pokemonNames.length; e++) {
+        if (pokemonNames[e]['name'] === name) {
+            let url = pokemonNames[e]['url'];
+            let response = await fetch(url);
+            let data = await response.json();
+            if (data['sprites']['other']['dream_world']['front_default'] == null) {
+                document.getElementById(`evolution${x}`).innerHTML += /*html*/`
+                    <img class="evol-img" src="${data['sprites']['other']['home']['front_default']}">`;
+            } else {
+                document.getElementById(`evolution${x}`).innerHTML += /*html*/`
+                    <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}">`;
+            }
+            return;
+        }
+    }
+}
+
+
+/* TALLER HTML RENDERING */
+
+function renderOnePokemonBoxStructure(i, onePokemon) {
+    return /*html*/`
+        <div class="pokemon-card-small-box d-f jc-c ai-c">
+            <div onclick="openDetailsOverlay(${i})" id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small pointer">
+                <div class="d-f jc-sb ai-c">
+                    <h2 class="tt-c">${onePokemon['name']}</h2>
+                    <span class="pokemon-id">#${onePokemon['id']}</span>
+                </div>
+                <div class="d-f jc-sb ai-c">
+                    <div id="pokemon-types${i}" class="d-f fd-c"></div>
+                    <img id="pokemon-img${i}" class="pokemon-img-small">
+                </div>
+            </div>
+        </div>`
+}
+
+
+function renderCoreInfosContent(i) {
+    return /*html*/`
         <table class="w-100">
             <tr>
                 <td class="w-33 light">Species</td>
@@ -274,64 +453,11 @@ function renderCoreInfos(i) {
                 <td class="tt-c" id="egg-groups"></td>
             </tr>
         </table>`;
-    addAbilities(i);
-    addGenderRate(i);
-    addEggGroups(i);
-    addCaptureRate(i);
 }
 
 
-function addAbilities(i) {
-    let abilitiesData = pokemonData[i]['abilities'];
-    let abilities = [];
-
-    for (let a = 0; a < abilitiesData.length; a++) {
-        let ability = abilitiesData[a]['ability']['name'];
-        abilities.push(ability);
-    }
-    document.getElementById('abilities').innerHTML = abilities.join(', ');
-}
-
-
-function addGenderRate(i) {
-    if (pokemonSpecies[i]['gender_rate'] == -1) {
-        document.getElementById('gender').innerHTML = 'Genderless';
-    } else {
-        let female = (pokemonSpecies[i]['gender_rate'] * 100) / 8;
-        let male = ((8 - pokemonSpecies[i]['gender_rate']) * 100) / 8;
-
-        document.getElementById('male').innerHTML = `${male}%`;
-        document.getElementById('female').innerHTML = `${female}%`;
-    }
-}
-
-
-function addEggGroups(i) {
-    let eggGroupsData = pokemonSpecies[i]['egg_groups'];
-    let eggGroups = [];
-
-    for (let e = 0; e < eggGroupsData.length; e++) {
-        let eggGroup = eggGroupsData[e]['name'];
-        eggGroups.push(eggGroup);
-    }
-    document.getElementById('egg-groups').innerHTML = eggGroups.join(', ');
-}
-
-
-function addCaptureRate(i) {
-    let captureRate = pokemonSpecies[i]['capture_rate'];
-    let ratePercent = (captureRate * 100) / 255;
-
-    document.getElementById('capture-rate').innerHTML = `${ratePercent.toFixed(2)}%`;
-}
-
-/* BASE STATS */
-
-function renderBaseStats(i) {
-    document.getElementById('about').classList.remove('active');
-    document.getElementById('evolution').classList.remove('active');
-    document.getElementById('base-stats').classList.add('active');
-    document.getElementById('details-content').innerHTML = /*html*/`
+function renderBaseStatsContent(i) {
+    return /*html*/`
         <table class="w-100">
             <tr>
                 <td class="w-20 light">HP</td>
@@ -397,138 +523,22 @@ function renderBaseStats(i) {
                 </td>
             </tr>
         </table>`;
-    renderStatBars(i);
-    renderTotal(i);
 }
 
 
-function renderStatBars(i) {
-    let maxStat = [255, 190, 250, 194, 250, 200];
-
-    for (let j = 0; j < maxStat.length; j++) {
-        const max = maxStat[j];
-        let stat = pokemonData[i]['stats'][j]['base_stat'];
-        let percent = (stat * 100) / max;
-
-        document.getElementById(`stat-bar${j}`).style.width = `${percent}%`;
-        if (percent > 50) {
-            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(90 175 105)";
-        } else {
-            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(255 56 11)";
-        }
-    }
-}
-
-
-function renderTotal(i) {
-    const stats = pokemonData[i]['stats'];
-    let sum = 0;
-    stats.forEach(element => {
-        sum += element.base_stat;
-    });
-    document.getElementById('total').innerHTML = sum;
-    let percent = (sum * 100) / 1125;
-    document.getElementById('total-bar').style.width = `${percent}%`;
-    if (percent > 50) {
-        document.getElementById('total-bar').style.backgroundColor = "rgb(90 175 105)";
-    } else {
-        document.getElementById('total-bar').style.backgroundColor = "rgb(255 56 11)";
-    }
-}
-
-
-async function renderEvolutionList(i) {
-    document.getElementById('about').classList.remove('active');
-    document.getElementById('base-stats').classList.remove('active');
-    document.getElementById('evolution').classList.add('active');
-    document.getElementById('details-content').innerHTML = /*html*/`
-    <h4>Evolution Chain</h4>
-    <div id="first-evolution-step" class="d-f jc-sa ai-c">
-        <div class="w-33 d-f jc-c" id="evolution0"></div>
-        <img src="img/arrow-evolution.png">
-        <div class="w-33 d-f jc-c" id="evolution1"></div>
-    </div>
-    <div id="second-evolution-step" class="d-f jc-sa ai-c">
-        <div class="w-33 d-f jc-c" id="evolution2"></div>
-        <img src="img/arrow-evolution.png">
-        <div class="w-33 d-f jc-c" id="evolution3"></div>
-    </div>`;
-    await getEvolutionData(i);
-}
-
-
-async function getEvolutionData(i) {
-    let url = pokemonSpecies[i]['evolution_chain']['url'];
-    let response = await fetch(url);
-    let evolution = await response.json();
-    let data = evolution['chain']['evolves_to'];
-    renderPokemonEvolutionSteps(evolution, data);
-}
-
-
-async function renderPokemonEvolutionSteps(evolution, data) {
-    if (data.length >= 1) {
-        let base = evolution['chain']['species']['name'];
-        await renderPokemonEvolutionImg(base, 0);
-        for (let f = 0; f < data.length; f++) {
-            let first = data[f]['species']['name'];
-            await renderPokemonEvolutionImg(first, 1);
-            let second = data[f]['evolves_to'];
-            if (second.length >= 1) {
-                await renderPokemonEvolutionImg(first, 2);
-                for (let s = 0; s < second.length; s++) {
-                    let secondName = second[s]['species']['name']
-                    await renderPokemonEvolutionImg(secondName, 3);
-                }
-            }
-            else {
-                document.getElementById('second-evolution-step').classList.add('d-none');
-            }
-        }
-    } else {
-        document.getElementById('first-evolution-step').classList.add('d-none');
-        document.getElementById('second-evolution-step').classList.add('d-none');
-        document.getElementById('details-content').innerHTML += /*html*/`
-        <span>This Pokemon has no evolutions.</span>`;
-    }
-}
-
-
-async function renderPokemonEvolutionImg(name, x) {
-    for (let e = 0; e < pokemonNames.length; e++) {
-        if (pokemonNames[e]['name'] === name) {
-            let url = pokemonNames[e]['url'];
-            let response = await fetch(url);
-            let data = await response.json();
-            if (data['sprites']['other']['dream_world']['front_default'] == null) {
-                document.getElementById(`evolution${x}`).innerHTML += /*html*/`
-                    <img class="evol-img" src="${data['sprites']['other']['home']['front_default']}">`;
-            } else {
-                document.getElementById(`evolution${x}`).innerHTML += /*html*/`
-                    <img class="evol-img" src="${data['sprites']['other']['dream_world']['front_default']}">`;
-            }
-            return;
-        }
-    }
-}
-
-
-/* HTML RENDERING */
-
-function renderOnePokemonBoxStructure(i, onePokemon) {
+function renderEvolutionListContent(i) {
     return /*html*/`
-        <div class="pokemon-card-small-box d-f jc-c ai-c">
-            <div onclick="openDetailsOverlay(${i})" id="pokemon-card-small${i}" class="pokemon-card-small d-f jc-sa fd-c bg-small pointer">
-                <div class="d-f jc-sb ai-c">
-                    <h2 class="tt-c">${onePokemon['name']}</h2>
-                    <span class="pokemon-id">#${onePokemon['id']}</span>
-                </div>
-                <div class="d-f jc-sb ai-c">
-                    <div id="pokemon-types${i}" class="d-f fd-c"></div>
-                    <img id="pokemon-img${i}" class="pokemon-img-small">
-                </div>
-            </div>
-        </div>`
+        <h4>Evolution Chain</h4>
+        <div id="first-evolution-step" class="d-f jc-sa ai-c p-b">
+            <div class="w-33 d-f jc-c" id="evolution0"></div>
+            <img src="img/arrow-evolution.png">
+            <div class="w-33 d-f jc-c" id="evolution1"></div>
+        </div>
+        <div id="second-evolution-step" class="d-f jc-sa ai-c">
+            <div class="w-33 d-f jc-c" id="evolution2"></div>
+            <img src="img/arrow-evolution.png">
+            <div class="w-33 d-f jc-c" id="evolution3"></div>
+        </div>`;
 }
 
 function underConstruction() {
