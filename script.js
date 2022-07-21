@@ -9,7 +9,7 @@ let offset = 0;
 async function init() {
     let url = 'https://pokeapi.co/api/v2/pokemon?limit=898&offset=0';
     let response = await fetch(url);
-    let allPokemonNames = await response.json(); 
+    let allPokemonNames = await response.json();
     allPokemons = allPokemonNames['results'];
     pokemonNames = allPokemons;
     loadPokemonData();
@@ -102,9 +102,8 @@ function addBackgroundToCard(i) {
 
 function nextPokemons() {
     let content = document.getElementById('container');
-    console.log('srolled')
-    if (content.offsetHeight + content.scrollTop >= content.scrollHeight) {
-        if (pokemonNames.length - 8 >= (offset + LIMIT)){
+    if (content.offsetHeight + content.scrollTop >= content.scrollHeight && !document.getElementById('search').disabled) {
+        if (pokemonNames.length - 8 >= (offset + LIMIT)) {
             offset += LIMIT;
             LIMIT = 8;
         } else {
@@ -173,34 +172,33 @@ function addBackgroundToOverlay(i) {
     document.getElementById('overlay-top').style.backgroundColor = `var(--${color})`;
 }
 
-
-async function searchPokemon() {
-    document.getElementById('container').innerHTML = '';
-    document.getElementById('search').disabled = true;
-    showLoadingScreen();
-    pokemonNames = [];
-    pokemonData = [];
-    pokemonSpecies = [];
-    let search = document.getElementById('search').value;
-    search = search.toLowerCase();
-    for (let i = 0; i < allPokemons.length; i++) {
-        let name = allPokemons[i]['name'];
-        if (name.indexOf(search) == 0 && name.includes(search)) {
-            pokemonNames.push(allPokemons[i]);
+let timeout = null;
+function searchPokemon() {
+    clearTimeout(timeout);
+    timeout = setTimeout(async function () {
+        console.log('search');
+        document.getElementById('container').innerHTML = '';
+        document.getElementById('search').disabled = true;
+        showLoadingScreen();
+        pokemonNames = [];
+        pokemonData = [];
+        pokemonSpecies = [];
+        let search = document.getElementById('search').value;
+        search = search.toLowerCase();
+        for (let i = 0; i < allPokemons.length; i++) {
+            let name = allPokemons[i]['name'];
+            if (name.indexOf(search) == 0 && name.includes(search)) {
+                pokemonNames.push(allPokemons[i]);
+            }
         }
-    }
-    offset = 0;
-    LIMIT = 48;
-    if (LIMIT > pokemonNames.length) {
-        LIMIT = pokemonNames.length;
-    }
-    console.log(pokemonNames)
-    console.log(pokemonData)
-    console.log(pokemonSpecies)
-    console.log('limit', LIMIT)
-    console.log('off', offset)
-    await loadPokemonData();
-    document.getElementById('search').disabled = false;
+        offset = 0;
+        LIMIT = 48;
+        if (LIMIT > pokemonNames.length) {
+            LIMIT = pokemonNames.length;
+        }
+        await loadPokemonData();
+        document.getElementById('search').disabled = false;
+    }, 2000);
 }
 
 
