@@ -105,12 +105,16 @@
                         </div>
                     </div>
                 </div>
-                <div id="loading" class="p-f d-f jc-c ai-c fd-c h-100 w-100">
+                <div id="loading" class="p-f d-f jc-c ai-c fd-c">
                     <img class="loading-img" src="img/pokeball.png">
                     <span>Loading...</span>
                 </div>
+                <div id="not-found" class="p-f d-f jc-c ai-c fd-c d-none">
+                    <img class="loading-img" src="img/pokeball.png">
+                    <span>No Pokemon found</span>
+                </div>
                 <!-- BOX FOR POKEMON RENDERING -->
-                <div onscroll="nextPokemons()" id="container" class="d-f jc-c"></div>
+                <div onscroll="loadNextPokemons()" id="container" class="d-f jc-c"></div>
             </div>
         </main>
     </div>

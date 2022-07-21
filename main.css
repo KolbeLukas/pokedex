@@ -291,6 +291,12 @@ h1 {
   border-radius: 8px;
 }
 
+#loading {
+  width: 49%;
+  height: 90%;
+  background-color: #F1F1F1;
+}
+
 .loading-img {
   height: 60px;
   width: 60px;
