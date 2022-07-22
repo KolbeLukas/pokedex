@@ -53,7 +53,8 @@
         <main class="p-a d-f jc-c h-100 bg-red">
             <!-- SEARCH SECTION -->
             <div class="main-top p-a d-f jc-sa ai-c bg-red">
-                <input oninput="searchPokemon()" id="search" class="search d-f w-33" type="text" placeholder="Search...">
+                <input oninput="searchPokemon()" id="search" class="search d-f w-33" type="text"
+                    placeholder="Search...">
                 <div class="light-top d-f jc-sa w-33">
                     <img src="img/red-light.png">
                     <img src="img/yellow-light.png">
@@ -93,7 +94,8 @@
                                 <table class="w-100">
                                     <tr>
                                         <td class="w-33 light">Gender</td>
-                                        <td class="w-20"><img class="mr-10" src="img/male.png"><span class="tt-c">10%</span></td>
+                                        <td class="w-20"><img class="mr-10" src="img/male.png"><span
+                                                class="tt-c">10%</span></td>
                                         <td><img class="mr-10" src="img/female.png"><span class="tt-c">90%</span></td>
                                     </tr>
                                     <tr>
@@ -110,26 +112,38 @@
                     <span>Loading...</span>
                 </div>
                 <div id="not-found" class="p-f d-f jc-c ai-c fd-c d-none">
-                    <img class="loading-img" src="img/pokeball.png">
-                    <span>No Pokemon found</span>
+                    <span>404</span>
+                    <span>Pokemon Not Found</span>
                 </div>
-                <div  class="menu-container z-1">
+                <div class="menu-container z-1">
                     <nav>
-                    <ul class="d-f jc-c">
-                      <li class="dropdown dropdown-6">
-                        <img class="menu-img" src="img/pokeball.png">
-                        <ul class="dropdown_menu dropdown_menu--animated dropdown_menu">
-                          <li class="pointer">
-                            <a class="d-f jc-c ai-c" href="">Impressum</a>
-                          </li>
-                          <li class="pointer">
-                            <a class="d-f jc-c ai-c" href="https://pokeapi.co/" target="_blank">API</a>
-                          </li>
+                        <ul class="d-f jc-c">
+                            <li class="dropdown dropdown-6">
+                                <img class="menu-img" src="img/pokeball.png">
+                                <ul class="dropdown_menu dropdown_menu--animated dropdown_menu">
+                                    <li class="pointer">
+                                        <a class="d-f jc-c ai-c pointer" onclick="openImpressum()">Impressum</a>
+                                    </li>
+                                    <li class="pointer">
+                                        <a class="d-f jc-c ai-c" href="https://pokeapi.co/" target="_blank">API</a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
-                      </li>
-                    </ul>
-                  </nav>
-                  </div>
+                    </nav>
+                </div>
+                <div id="impressum" class="p-f d-f jc-c ai-c fd-c d-none">
+                    <h1>Impressum</h1>
+                    <img onclick="closeImpressum()" class="p-a pointer" src="img/arrow-back.png">
+                    <h2>Angaben gem&auml;&szlig; &sect; 5 TMG</h2>
+                    <p>Lukas Kolbe<br />
+                        Gutenbergstra&szlig;e 106<br>
+                        50823 K&ouml;ln</p>
+                    <h2>Kontakt</h2>
+                    <p>Telefon: 015753310130<br>
+                        E-Mail: sakul1994@gmx.net</p>
+                    <p>Quelle: <a href="https://www.e-recht24.de">https://www.e-recht24.de</a></p>
+                </div>
                 <!-- BOX FOR POKEMON RENDERING -->
                 <div onscroll="loadNextPokemons()" id="container" class="d-f jc-c"></div>
             </div>

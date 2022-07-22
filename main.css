@@ -321,7 +321,7 @@ h1 {
 
 #loading {
   width: 49%;
-  height: 90%;
+  height: 89.1%;
   background-color: #F1F1F1;
 }
 
@@ -342,6 +342,17 @@ h1 {
 
 .loading-box span {
   font-size: 20px;
+}
+
+#impressum {
+  width: 49%;
+  height: 89.1%;
+  background-color: #F1F1F1;
+}
+
+#impressum img {
+  top: 20px;
+  left: 20px;
 }
 
 .pokemon-card-small-box {

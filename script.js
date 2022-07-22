@@ -128,7 +128,6 @@ function searchPokemon() {
     timeout = setTimeout(loadSearchedPokemons, 1500);
 }
 
-
 async function loadSearchedPokemons() {
     document.getElementById('search').disabled = true;
     document.getElementById('container').innerHTML = '';
@@ -136,6 +135,7 @@ async function loadSearchedPokemons() {
     getSearchedPokemonData();
     setMaxLoadedPokemon();
     await loadPokemonData();
+    pokemonFoundCheck();
     document.getElementById('search').disabled = false;
 }
 
@@ -164,10 +164,19 @@ function setMaxLoadedPokemon() {
     }
 }
 
-function showNotFound() {
+function pokemonFoundCheck() {
     if (document.getElementById('container').innerHTML == '') {
         document.getElementById('not-found').classList.remove('d-none');
     }
+}
+
+
+function openImpressum() {
+    document.getElementById('impressum').classList.remove('d-none');
+}
+
+function closeImpressum() {
+    document.getElementById('impressum').classList.add('d-none');
 }
 
 
@@ -332,7 +341,7 @@ async function renderEvolutionList(i) {
     document.getElementById('about').classList.remove('active');
     document.getElementById('base-stats').classList.remove('active');
     document.getElementById('evolution').classList.add('active');
-    document.getElementById('details-content').innerHTML = renderEvolutionListContent(i);
+    document.getElementById('details-content').innerHTML = renderEvolutionListContent();
     await getEvolutionData(i);
 }
 
@@ -526,7 +535,7 @@ function renderBaseStatsContent(i) {
 }
 
 
-function renderEvolutionListContent(i) {
+function renderEvolutionListContent() {
     return /*html*/`
         <h4>Evolution Chain</h4>
         <div id="first-evolution-step" class="d-f jc-sa ai-c p-b">
