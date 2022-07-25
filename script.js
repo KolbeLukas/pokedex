@@ -310,11 +310,15 @@ function renderStatBars(i) {
         let percent = (stat * 100) / max;
 
         document.getElementById(`stat-bar${j}`).style.width = `${percent}%`;
-        if (percent > 50) {
-            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(90 175 105)";
-        } else {
-            document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(255 56 11)";
-        }
+        setStatColor(percent, j);
+    }
+}
+
+function setStatColor(percent, j) {
+    if (percent > 50) {
+        document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(90 175 105)";
+    } else {
+        document.getElementById(`stat-bar${j}`).style.backgroundColor = "rgb(255 56 11)";
     }
 }
 
@@ -327,6 +331,10 @@ function renderTotal(i) {
     document.getElementById('total').innerHTML = sum;
     let percent = (sum * 100) / 1125;
     document.getElementById('total-bar').style.width = `${percent}%`;
+    setTotalStatColor(percent);
+}
+
+function setTotalStatColor(percent) {
     if (percent > 50) {
         document.getElementById('total-bar').style.backgroundColor = "rgb(90 175 105)";
     } else {
@@ -357,24 +365,32 @@ async function renderPokemonEvolutionSteps(evolution, data) {
     if (data.length >= 1) {
         let base = evolution['chain']['species']['name'];
         await renderPokemonEvolutionImg(base, 0);
-        for (let f = 0; f < data.length; f++) {
-            let first = data[f]['species']['name'];
-            await renderPokemonEvolutionImg(first, 1);
-            let second = data[f]['evolves_to'];
-            if (second.length >= 1) {
-                await renderPokemonEvolutionImg(first, 2);
-                for (let s = 0; s < second.length; s++) {
-                    let secondName = second[s]['species']['name']
-                    await renderPokemonEvolutionImg(secondName, 3);
-                }
-            }
-            else {
-                document.getElementById('second-evolution-step').classList.add('d-none');
-            }
-        }
+        await getFirstEvolution(data);
     } else {
         noEvolutions();
     }
+}
+
+async function getFirstEvolution(data) {
+    for (let f = 0; f < data.length; f++) {
+        let first = data[f]['species']['name'];
+        await renderPokemonEvolutionImg(first, 1);
+        await getSecondEvolutions(data, first, f);
+    }
+}
+
+async function getSecondEvolutions(data, first, f) {
+    let second = data[f]['evolves_to'];
+        if (second.length >= 1) {
+            await renderPokemonEvolutionImg(first, 2);
+            for (let s = 0; s < second.length; s++) {
+                let secondName = second[s]['species']['name']
+                await renderPokemonEvolutionImg(secondName, 3);
+            }
+        }
+        else {
+            document.getElementById('second-evolution-step').classList.add('d-none');
+        }
 }
 
 function noEvolutions() {
