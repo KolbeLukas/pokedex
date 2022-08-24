@@ -70,14 +70,13 @@
                         <div id="overlay-top" class="details-overlay-top bg-big d-f fd-c jc-sb">
                             <div class="back-favorite d-f jc-sb">
                                 <img onclick="closeDetailsOverlay()" class="pointer" src="img/arrow-back.png">
-                                <img onclick="underConstruction()" class="pointer" src="img/favorite.png">
+                                <span id="id" class="pokemon-id"></span>
                             </div>
                             <div class="d-f jc-sb ai-c">
                                 <div>
                                     <h3 class="tt-c" id="name"></h3>
                                     <div id="types" class="details-overlay-types"></div>
                                 </div>
-                                <span id="id" class="pokemon-id"></span>
                             </div>
                             <div class="d-f jc-c w-100">
                                 <img class="img-overlay" id="img">
@@ -122,7 +121,7 @@
                                 <img class="menu-img" src="img/pokeball.png">
                                 <ul class="dropdown_menu dropdown_menu--animated dropdown_menu">
                                     <li class="pointer">
-                                        <a class="d-f jc-c ai-c pointer" onclick="openImpressum()">Impressum</a>
+                                        <a class="d-f jc-c ai-c pointer" onclick="openImpressum()">Imprint</a>
                                     </li>
                                     <li class="pointer">
                                         <a class="d-f jc-c ai-c" href="https://pokeapi.co/" target="_blank">API</a>
@@ -133,19 +132,22 @@
                     </nav>
                 </div>
                 <div id="impressum" class="p-f d-f jc-c ai-c fd-c d-none">
-                    <h1>Impressum</h1>
                     <img onclick="closeImpressum()" class="p-a pointer" src="img/arrow-back.png">
-                    <h2>Angaben gem&auml;&szlig; &sect; 5 TMG</h2>
-                    <p>Lukas Kolbe<br />
-                        Gutenbergstra&szlig;e 106<br>
-                        50823 K&ouml;ln</p>
-                    <h2>Kontakt</h2>
-                    <p>Telefon: 015753310130<br>
-                        E-Mail: sakul1994@gmx.net</p>
-                    <p>Quelle: <a href="https://www.e-recht24.de">https://www.e-recht24.de</a></p>
+                    <h1>Impressum</h1>
+                    <h2>Angaben gemäß § 5 TMG:</h2>
+                    <p><br>Lukas Kolbe</p>
+                    <h3>Postanschrift:</h3>
+                    <p>Gutenbergstraße 106<br>50823 Köln<br></p>
+                    <h3>Kontakt:</h3>
+                    <p>Telefon: 015753310130<br>E-Mail: kolbe.lukas@gmx.de</p>
+                    <h2>Hinweise zur Website</h2>
+                    <p><em>Das Impressum wurde mit dem <a
+                                href="https://www.activemind.de/datenschutz/impressums-generator/">Impressums-Generator
+                                der
+                                activeMind AG</a> erstellt.</em></p>
                 </div>
                 <!-- BOX FOR POKEMON RENDERING -->
-                <div onscroll="loadNextPokemons()" id="container" class="d-f jc-c"></div>
+                <div onscroll="loadNextPokemons()" id="container" class="d-f jc-c ac-s"></div>
             </div>
         </main>
     </div>

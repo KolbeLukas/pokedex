@@ -11,6 +11,10 @@ async function init() {
     let response = await fetch(url);
     let allPokemonNames = await response.json();
     allPokemons = allPokemonNames['results'];
+    loadAllPokemons(allPokemons);
+}
+
+function loadAllPokemons(allPokemons) {
     pokemonNames = allPokemons;
     loadPokemonData();
 }
@@ -130,7 +134,6 @@ function searchPokemon() {
 
 async function loadSearchedPokemons() {
     document.getElementById('search').disabled = true;
-    document.getElementById('container').innerHTML = '';
     claerPokemonDatas();
     getSearchedPokemonData();
     setMaxLoadedPokemon();
@@ -140,6 +143,7 @@ async function loadSearchedPokemons() {
 }
 
 function claerPokemonDatas() {
+    document.getElementById('container').innerHTML = '';
     pokemonNames = [];
     pokemonData = [];
     pokemonSpecies = [];
@@ -195,7 +199,6 @@ function openDetailsOverlay(i) {
     addTypesOfPokemonOverlay(i);
     addOnclickToNavElements(i);
 }
-
 
 function closeDetailsOverlay() {
     document.getElementById('details-overlay').classList.add('n-vis');
@@ -381,16 +384,16 @@ async function getFirstEvolution(data) {
 
 async function getSecondEvolutions(data, first, f) {
     let second = data[f]['evolves_to'];
-        if (second.length >= 1) {
-            await renderPokemonEvolutionImg(first, 2);
-            for (let s = 0; s < second.length; s++) {
-                let secondName = second[s]['species']['name']
-                await renderPokemonEvolutionImg(secondName, 3);
-            }
+    if (second.length >= 1) {
+        await renderPokemonEvolutionImg(first, 2);
+        for (let s = 0; s < second.length; s++) {
+            let secondName = second[s]['species']['name']
+            await renderPokemonEvolutionImg(secondName, 3);
         }
-        else {
-            document.getElementById('second-evolution-step').classList.add('d-none');
-        }
+    }
+    else {
+        document.getElementById('second-evolution-step').classList.add('d-none');
+    }
 }
 
 function noEvolutions() {
@@ -564,8 +567,4 @@ function renderEvolutionListContent() {
             <img src="img/arrow-evolution.png">
             <div class="w-33 d-f jc-c fd-c" id="evolution3"></div>
         </div>`;
-}
-
-function underConstruction() {
-    alert('under construction');
 }
