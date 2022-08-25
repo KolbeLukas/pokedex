@@ -98,7 +98,6 @@ function addBackgroundToCard(i) {
 function loadNextPokemons() {
     let content = document.getElementById('container');
     if (scrolledToBottom(content) && noSearching()) {
-        console.log('scroll')
         setLimitOfNewLoadedPokemon();
         loadPokemonData();
     }
