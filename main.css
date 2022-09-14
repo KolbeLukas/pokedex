@@ -113,6 +113,10 @@ body {
   z-index: 3;
 }
 
+.z-4 {
+  z-index: 4;
+}
+
 .z-5 {
   z-index: 5;
 }

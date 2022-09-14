@@ -10,14 +10,17 @@
     <link rel="stylesheet" href="color+background.css">
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <link rel="stylesheet" href="fonts.css">
+    <script src='html.js'></script>
+    <script src='overlay.js'></script>
     <script src='script.js'></script>
 </head>
 
 <body onload="init()">
+    <div class="p-a h-100 w-100 d-none" id="pseudo-overlay" onclick="closeDetailsOverlay()"></div>
     <div id="pokedex" class="p-a">
         <!-- POKEDEX COVER FRONT -->
         <input class="open" type="checkbox" id="one">
-        <div class="cover p-a bg-red z-5">
+        <div class="cover p-a bg-red z-5" onclick="closeDetailsOverlay()">
             <div class="top-edge p-a bg-red"></div>
             <div class="front p-a h-100 w-100">
                 <div class="headline p-a d-f jc-c w-100">
@@ -52,7 +55,7 @@
         </div>
         <main class="p-a d-f jc-c h-100 bg-red">
             <!-- SEARCH SECTION -->
-            <div class="main-top p-a d-f jc-sa ai-c bg-red">
+            <div class="main-top p-a d-f jc-sa ai-c bg-red" onclick="closeDetailsOverlay()">
                 <input oninput="searchPokemon()" id="search" class="search d-f w-33" type="text"
                     placeholder="Search...">
                 <div class="light-top d-f jc-sa w-33">
@@ -64,8 +67,9 @@
             </div>
             <div class="container d-f jc-c ai-c">
                 <!-- OVERLAY FOR POKEMON DETAILS -->
-                <div id="details-overlay" class="details-overlay-box p-f z-2 d-f jc-c ai-c vis n-vis">
-                    <div class="details-overlay">
+                <div id="details-overlay" class="details-overlay-box p-f z-3 d-f jc-c ai-c vis n-vis"
+                    onclick="closeDetailsOverlay()">
+                    <div class="details-overlay" onclick="stopPropagation(event)">
                         <!-- TOP SECTION -->
                         <div id="overlay-top" class="details-overlay-top bg-big d-f fd-c jc-sb">
                             <div class="back-favorite d-f jc-sb">
@@ -95,7 +99,8 @@
                                         <td class="w-33 light">Gender</td>
                                         <td class="w-20"><img class="mr-10" src="img/male.png"><span
                                                 class="tt-c">10%</span></td>
-                                        <td><img class="mr-10" src="img/female.png"><span class="tt-c">90%</span></td>
+                                        <td><img class="mr-10" src="img/female.png"><span class="tt-c">90%</span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="w-33 light">Egg Group</td>
@@ -106,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="loading" class="p-f d-f jc-c ai-c fd-c z-3">
+                <div id="loading" class="p-f d-f jc-c ai-c fd-c z-4">
                     <img class="loading-img" src="img/pokeball.png">
                     <span>Loading...</span>
                 </div>
